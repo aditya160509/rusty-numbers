@@ -1,0 +1,11 @@
+def a1K "?msd_11 n>0 & s+14=23*n+RUSTYK[n-1]":
+def b2K "?msd_11 Es $a1K(n,s) & 11*t<=s+2 & s+2<11*t+11":
+def b1K "?msd_11 Es,t $a1K(n,s) & $b2K(n,t) & u+10*t=s":
+eval r10_total "?msd_11 An n>0 => (Es,t,u $a1K(n,s) & $b1K(n,t) & $b2K(n,u))":
+eval r10_init "?msd_11 $b1K(1,1) & $b2K(1,2) & $a1K(1,21)":
+eval r10_order "?msd_11 An,s,t,u ($b1K(n,s) & $b2K(n,t) & $b1K(n+1,u)) => (s<t & t<u)":
+eval r10_b1_new "?msd_11 An,s,m ($b1K(n,s) & m<n & m>0) => (~$a1K(m,s))":
+eval r10_b2_new "?msd_11 An,s,m ($b2K(n,s) & m<n & m>0) => (~$a1K(m,s))":
+eval r10_mex_b1 "?msd_11 An,s,t ($b1K(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b1K(m,t)|$b2K(m,t)|$a1K(m,t)))":
+eval r10_mex_b2 "?msd_11 An,u,s,t ($b1K(n,u) & $b2K(n,s) & u<t & t<s) => (Em m>0 & m<n & $a1K(m,t))":
+eval r10_sum "?msd_11 An,s,t ($b1K(n,s) & $b2K(n,t)) => $a1K(n,s+10*t)":

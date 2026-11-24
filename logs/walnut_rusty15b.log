@@ -1,0 +1,74 @@
+Welcome to Walnut! Type "help;" to see all available commands.
+
+[Walnut]$ eval r15_order1 "?msd_16 An,s,t ($b1P(n,s) & $b2P(n,t)) => s<t":
+(b1P(n,s))&b2P(n,t))):161 states - 60ms
+ s<t:2 states - 0ms
+  ((b1P(n,s))&b2P(n,t)))=>s<t):1 states - 1396ms
+   (A n , s , t ((b1P(n,s))&b2P(n,t)))=>s<t)):1 states - 3ms
+Total computation time: 1494ms.
+____
+TRUE
+eval r15_order2 "?msd_16 An,t,u ($b2P(n,t) & $b1P(n+1,u)) => t<u":
+computed ~:1 states - 4ms
+computed ~:2 states - 0ms
+(b2P(n,t))&b1P((n+1),u))):188 states - 39ms
+ t<u:2 states - 0ms
+  ((b2P(n,t))&b1P((n+1),u)))=>t<u):1 states - 1343ms
+   (A n , t , u ((b2P(n,t))&b1P((n+1),u)))=>t<u)):1 states - 1ms
+Total computation time: 1437ms.
+____
+TRUE
+def eaP "?msd_16 Em m>0 & m<n & $a1P(m,t)":
+computed ~:1 states - 1ms
+m>0:2 states - 1ms
+ m<n:2 states - 1ms
+  (m>0&m<n):4 states - 0ms
+   ((m>0&m<n)&a1P(m,t))):166 states - 51ms
+    (E m ((m>0&m<n)&a1P(m,t)))):182 states - 31ms
+Total computation time: 86ms.
+eval r15_mex_b2 "?msd_16 An,u,s,t ($b1P(n,u) & $b2P(n,s) & u<t & t<s) => $eaP(n,t)":
+(b1P(n,u))&b2P(n,s))):161 states - 28ms
+ u<t:2 states - 0ms
+  ((b1P(n,u))&b2P(n,s)))&u<t):304 states - 386ms
+   t<s:2 states - 0ms
+    (((b1P(n,u))&b2P(n,s)))&u<t)&t<s):144 states - 1389ms
+     ((((b1P(n,u))&b2P(n,s)))&u<t)&t<s)=>eaP(n,t))):1 states - 52353ms
+java.lang.Exception: size of input alphabet exceeds the limit of 65535
+	at Automata.Automaton.to_dk_bricks_automaton(Automaton.java:3600)
+	at Automata.Automaton.isEmpty(Automaton.java:3970)
+	at Automata.Automaton.quantifyHelper(Automaton.java:792)
+	at Automata.Automaton.quantify(Automaton.java:732)
+	at Token.LogicalOperator.actQuantifier(LogicalOperator.java:144)
+	at Token.LogicalOperator.act(LogicalOperator.java:59)
+	at Main.Computer.compute(Computer.java:113)
+	at Main.Computer.<init>(Computer.java:49)
+	at Main.Prover.eval_def_commands(Prover.java:565)
+	at Main.Prover.dispatch(Prover.java:383)
+	at Main.Prover.readBuffer(Prover.java:335)
+	at Main.Prover.loadCommand(Prover.java:538)
+	at Main.Prover.dispatch(Prover.java:381)
+	at Main.Prover.readBuffer(Prover.java:335)
+	at Main.Prover.run(Prover.java:289)
+	at Main.Prover.main(Prover.java:255)
+size of input alphabet exceeds the limit of 65535
+	: char at 7
+	: eval r15_mex_b2 "?msd_16 An,u,s,t ($b1P(n,u) & $b2P(n,s) & u<t & t<s) => $eaP(n,t)":
+
+[Walnut]$        57.58 real        72.10 user         3.03 sys
+          8338931712  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1021162  page reclaims
+                  12  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   2  signals received
+                  73  voluntary context switches
+               77490  involuntary context switches
+       1364400481916  instructions retired
+        290531198958  cycles elapsed
+         10177191880  peak memory footprint

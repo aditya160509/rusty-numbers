@@ -1,0 +1,4 @@
+eval r15_order1 "?msd_16 An,s,t ($b1P(n,s) & $b2P(n,t)) => s<t":
+eval r15_order2 "?msd_16 An,t,u ($b2P(n,t) & $b1P(n+1,u)) => t<u":
+def eaP "?msd_16 Em m>0 & m<n & $a1P(m,t)":
+eval r15_mex_b2 "?msd_16 An,u,s,t ($b1P(n,u) & $b2P(n,s) & u<t & t<s) => $eaP(n,t)":

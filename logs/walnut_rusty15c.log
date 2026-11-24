@@ -1,0 +1,38 @@
+Welcome to Walnut! Type "help;" to see all available commands.
+
+[Walnut]$ def loP "?msd_16 Eu $b1P(n,u) & u<t":
+u<t:2 states - 5ms
+ (b1P(n,u))&u<t):207 states - 110ms
+  (E u (b1P(n,u))&u<t)):109 states - 49ms
+Total computation time: 184ms.
+def hiP "?msd_16 Es $b2P(n,s) & t<s":
+t<s:2 states - 1ms
+ (b2P(n,s))&t<s):217 states - 61ms
+  (E s (b2P(n,s))&t<s)):103 states - 34ms
+Total computation time: 98ms.
+eval r15_mex_b2 "?msd_16 An,t ($loP(n,t) & $hiP(n,t)) => $eaP(n,t)":
+(loP(n,t))&hiP(n,t))):105 states - 11ms
+ ((loP(n,t))&hiP(n,t)))=>eaP(n,t))):1 states - 473ms
+  (A n , t ((loP(n,t))&hiP(n,t)))=>eaP(n,t)))):1 states - 2ms
+Total computation time: 519ms.
+____
+TRUE
+
+[Walnut]$         1.10 real         3.23 user         0.05 sys
+           415334400  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               26928  page reclaims
+                   9  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   2  signals received
+                  94  voluntary context switches
+                3260  involuntary context switches
+         42271410005  instructions retired
+         12810163544  cycles elapsed
+           392283336  peak memory footprint

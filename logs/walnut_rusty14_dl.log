@@ -1,0 +1,131 @@
+Welcome to Walnut! Type "help;" to see all available commands.
+
+[Walnut]$ def a1O "?msd_15 n>0 & s+19=31*n+RUSTYO[n-1]":
+computed ~:1 states - 5ms
+n>0:2 states - 18ms
+computed ~:1 states - 0ms
+computed ~:2 states - 1ms
+ (s+19)=((31*n)+RUSTYO[(n-1)]):78 states - 42ms
+  (n>0&(s+19)=((31*n)+RUSTYO[(n-1)])):78 states - 2ms
+Total computation time: 624125ms.
+def b2O "?msd_15 Es $a1O(n,s) & 15*t<=s+2 & s+2<15*t+15":
+(15*t)<=(s+2):18 states - 25ms
+ (a1O(n,s))&(15*t)<=(s+2)):845 states - 120ms
+  (s+2)<((15*t)+15):16 states - 23ms
+   ((a1O(n,s))&(15*t)<=(s+2))&(s+2)<((15*t)+15)):760 states - 139ms
+    (E s ((a1O(n,s))&(15*t)<=(s+2))&(s+2)<((15*t)+15))):108 states - 7ms
+Total computation time: 332ms.
+def b1O "?msd_15 Es,t $a1O(n,s) & $b2O(n,t) & u+14*t=s":
+(a1O(n,s))&b2O(n,t))):760 states - 173ms
+ (u+(14*t))=s:15 states - 82ms
+  ((a1O(n,s))&b2O(n,t)))&(u+(14*t))=s):760 states - 5868ms
+   (E s , t ((a1O(n,s))&b2O(n,t)))&(u+(14*t))=s)):96 states - 7ms
+Total computation time: 6233ms.
+eval r14_total "?msd_15 An n>0 => (Es,t,u $a1O(n,s) & $b1O(n,t) & $b2O(n,u))":
+n>0:2 states - 0ms
+ (a1O(n,s))&b1O(n,t))):711 states - 143ms
+  ((a1O(n,s))&b1O(n,t)))&b2O(n,u))):760 states - 1881ms
+   (E s , t , u ((a1O(n,s))&b1O(n,t)))&b2O(n,u)))):2 states - 4ms
+    (n>0=>(E s , t , u ((a1O(n,s))&b1O(n,t)))&b2O(n,u))))):1 states - 0ms
+     (A n (n>0=>(E s , t , u ((a1O(n,s))&b1O(n,t)))&b2O(n,u)))))):1 states - 0ms
+Total computation time: 2033ms.
+____
+TRUE
+eval r14_init "?msd_15 $b1O(1,1) & $b2O(1,2) & $a1O(1,29)":
+(b1O(1,1))&b2O(1,2))):0 states - 0ms
+ ((b1O(1,1))&b2O(1,2)))&a1O(1,29))):0 states - 0ms
+Total computation time: 12ms.
+____
+TRUE
+eval r14_order "?msd_15 An,s,t,u ($b1O(n,s) & $b2O(n,t) & $b1O(n+1,u)) => (s<t & t<u)":
+(b1O(n,s))&b2O(n,t))):149 states - 21ms
+ ((b1O(n,s))&b2O(n,t)))&b1O((n+1),u))):207 states - 397ms
+  s<t:2 states - 0ms
+   t<u:2 states - 0ms
+    (s<t&t<u):4 states - 9ms
+     (((b1O(n,s))&b2O(n,t)))&b1O((n+1),u)))=>(s<t&t<u)):1 states - 495297ms
+      (A n , s , t , u (((b1O(n,s))&b2O(n,t)))&b1O((n+1),u)))=>(s<t&t<u))):1 states - 16ms
+Total computation time: 495761ms.
+____
+TRUE
+eval r14_b1_new "?msd_15 An,s,m ($b1O(n,s) & m<n & m>0) => (~$a1O(m,s))":
+m<n:2 states - 1ms
+ (b1O(n,s))&m<n):186 states - 203ms
+  m>0:2 states - 0ms
+   ((b1O(n,s))&m<n)&m>0):283 states - 130ms
+    ~a1O(m,s)):79 states - 9ms
+     (((b1O(n,s))&m<n)&m>0)=>~a1O(m,s))):1 states - 5338ms
+      (A n , s , m (((b1O(n,s))&m<n)&m>0)=>~a1O(m,s)))):1 states - 0ms
+Total computation time: 5686ms.
+____
+TRUE
+eval r14_b2_new "?msd_15 An,s,m ($b2O(n,s) & m<n & m>0) => (~$a1O(m,s))":
+m<n:2 states - 0ms
+ (b2O(n,s))&m<n):197 states - 62ms
+  m>0:2 states - 1ms
+   ((b2O(n,s))&m<n)&m>0):292 states - 67ms
+    ~a1O(m,s)):79 states - 6ms
+     (((b2O(n,s))&m<n)&m>0)=>~a1O(m,s))):1 states - 5061ms
+      (A n , s , m (((b2O(n,s))&m<n)&m>0)=>~a1O(m,s)))):1 states - 1ms
+Total computation time: 5201ms.
+____
+TRUE
+eval r14_mex_b1 "?msd_15 An,s,t ($b1O(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b1O(m,t)|$b2O(m,t)|$a1O(m,t)))":
+t>0:2 states - 0ms
+ (b1O(n,s))&t>0):190 states - 65ms
+  t<s:2 states - 0ms
+   ((b1O(n,s))&t>0)&t<s):285 states - 267ms
+    m>0:2 states - 0ms
+     m<n:2 states - 0ms
+      (m>0&m<n):4 states - 1ms
+       (b1O(m,t))|b2O(m,t))):111 states - 108ms
+        ((b1O(m,t))|b2O(m,t)))|a1O(m,t))):188 states - 174ms
+         ((m>0&m<n)&((b1O(m,t))|b2O(m,t)))|a1O(m,t)))):357 states - 137ms
+          (E m ((m>0&m<n)&((b1O(m,t))|b2O(m,t)))|a1O(m,t))))):293 states - 109ms
+           (((b1O(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b1O(m,t))|b2O(m,t)))|a1O(m,t)))))):1 states - 8509ms
+            (A n , s , t (((b1O(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b1O(m,t))|b2O(m,t)))|a1O(m,t))))))):1 states - 1ms
+Total computation time: 9379ms.
+____
+TRUE
+eval r14_mex_b2 "?msd_15 An,u,s,t ($b1O(n,u) & $b2O(n,s) & u<t & t<s) => (Em m>0 & m<n & $a1O(m,t))":
+(b1O(n,u))&b2O(n,s))):149 states - 44ms
+ u<t:2 states - 0ms
+  ((b1O(n,u))&b2O(n,s)))&u<t):293 states - 414ms
+   t<s:2 states - 0ms
+    (((b1O(n,u))&b2O(n,s)))&u<t)&t<s):145 states - 1113ms
+     m>0:2 states - 0ms
+      m<n:2 states - 0ms
+       (m>0&m<n):4 states - 1ms
+        ((m>0&m<n)&a1O(m,t))):151 states - 66ms
+         (E m ((m>0&m<n)&a1O(m,t)))):165 states - 34ms
+          ((((b1O(n,u))&b2O(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a1O(m,t))))):1 states - 66901ms
+           (A n , u , s , t ((((b1O(n,u))&b2O(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a1O(m,t)))))):1 states - 12ms
+Total computation time: 68591ms.
+____
+TRUE
+eval r14_sum "?msd_15 An,s,t ($b1O(n,s) & $b2O(n,t)) => $a1O(n,s+14*t)":
+(b1O(n,s))&b2O(n,t))):149 states - 125ms
+ ((b1O(n,s))&b2O(n,t)))=>a1O(n,(s+(14*t))))):1 states - 92026ms
+  (A n , s , t ((b1O(n,s))&b2O(n,t)))=>a1O(n,(s+(14*t)))))):1 states - 0ms
+Total computation time: 94926ms.
+____
+TRUE
+
+[Walnut]$      1312.51 real      1898.28 user        39.97 sys
+          4462772224  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             6724940  page reclaims
+                  17  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                 379  signals received
+                  86  voluntary context switches
+             1397525  involuntary context switches
+      33384535693897  instructions retired
+       6558037510148  cycles elapsed
+          4538601480  peak memory footprint

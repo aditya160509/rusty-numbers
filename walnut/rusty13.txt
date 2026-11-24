@@ -1,0 +1,11 @@
+def a1N "?msd_14 n>0 & s+18=29*n+RUSTYN[n-1]":
+def b2N "?msd_14 Es $a1N(n,s) & 14*t<=s+2 & s+2<14*t+14":
+def b1N "?msd_14 Es,t $a1N(n,s) & $b2N(n,t) & u+13*t=s":
+eval r13_total "?msd_14 An n>0 => (Es,t,u $a1N(n,s) & $b1N(n,t) & $b2N(n,u))":
+eval r13_init "?msd_14 $b1N(1,1) & $b2N(1,2) & $a1N(1,27)":
+eval r13_order "?msd_14 An,s,t,u ($b1N(n,s) & $b2N(n,t) & $b1N(n+1,u)) => (s<t & t<u)":
+eval r13_b1_new "?msd_14 An,s,m ($b1N(n,s) & m<n & m>0) => (~$a1N(m,s))":
+eval r13_b2_new "?msd_14 An,s,m ($b2N(n,s) & m<n & m>0) => (~$a1N(m,s))":
+eval r13_mex_b1 "?msd_14 An,s,t ($b1N(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b1N(m,t)|$b2N(m,t)|$a1N(m,t)))":
+eval r13_mex_b2 "?msd_14 An,u,s,t ($b1N(n,u) & $b2N(n,s) & u<t & t<s) => (Em m>0 & m<n & $a1N(m,t))":
+eval r13_sum "?msd_14 An,s,t ($b1N(n,s) & $b2N(n,t)) => $a1N(n,s+13*t)":

@@ -4,7 +4,7 @@
 
 ## Theorem (proved)
 
-For d = 1, …, 8 and d = 11, with A_n = B_{2n−1} + d·B_{2n} and B the complement of A taken blockwise by mex:
+For every d = 1, …, 15, with A_n = B_{2n−1} + d·B_{2n} and B the complement of A taken blockwise by mex:
 
 | d | κ = 2d+3 | A_n − κn is | msd DFAO states | Automaton | Log |
 |---|---|---|---|---|---|
@@ -16,9 +16,18 @@ For d = 1, …, 8 and d = 11, with A_n = B_{2n−1} + d·B_{2n} and B the comple
 | 6 | 15 | 7-automatic | 16 | `automata/RUSTYG.txt` | `logs/walnut_rusty6.log` |
 | 7 | 17 | 8-automatic | 19 | `automata/RUSTYH.txt` | `logs/walnut_rusty7.log` |
 | 8 | 19 | 9-automatic | 21 | `automata/RUSTYI.txt` | `logs/walnut_rusty8.log` |
+| 9 | 21 | 10-automatic | 26 | `automata/RUSTYJ.txt` | `logs/walnut_rusty9_dl.log` |
+| 10 | 23 | 11-automatic | 29 | `automata/RUSTYK.txt` | `logs/walnut_rusty10_dl.log` |
 | 11 | 25 | 12-automatic | 31 | `automata/RUSTYL.txt` | `logs/walnut_rusty11_4g.log` |
+| 12 | 27 | 13-automatic | 36 | `automata/RUSTYM.txt` | `logs/walnut_rusty12_dl.log` |
+| 13 | 29 | 14-automatic | 39 | `automata/RUSTYN.txt` | `logs/walnut_rusty13_dl.log` |
+| 14 | 31 | 15-automatic | 41 | `automata/RUSTYO.txt` | `logs/walnut_rusty14_dl.log` |
+| 15 | 33 | 16-automatic | 46 | `automata/RUSTYP.txt` | `logs/walnut_rusty15_8g.log` + `15b`, `15c` (see note) |
 
-d = 1 (anti-Fibonacci) and d = 2 (anti-Pell) were already known and serve as controls. **New: d = 3, 4, 5, 6, 7, 8, 11.** Peak memory ≤ 0.71 GB except d = 11 (2.7 GB).
+d = 1 (anti-Fibonacci) and d = 2 (anti-Pell) were already known and serve as controls. **New: d = 3 to 15.** Peak memory up to 8 GB for d = 15.
+
+Note on d = 15: Walnut hit its input-alphabet limit on `order` and `mex_b2` (base 16, 4+ variables). They were checked in equivalent split form: `order` as B¹ₙ<B²ₙ and B²ₙ<B¹ₙ₊₁ (`rusty15b.txt`); `mex_b2` via helpers lo(n,t)=∃u B¹ₙ=u<t, hi(n,t)=∃s t<s=B²ₙ, ea(n,t)=∃m<n Aₘ=t (`rusty15c.txt`). Since B¹, B² are functions (by `total`), these are equivalent to the originals. All TRUE.
+Automata for d = 9, 10, 12–15 were built by `build3.py` from the k-block substitution (supplied externally); the Walnut proof does not depend on how they were found.
 
 So the conjecture holds for these rusty numbers. For d = 4, one state of the automaton is first reached at prefix 348, which explains the "break" at n = 348.
 
@@ -48,6 +57,6 @@ Walnut 6 (github.com/firetto/Walnut), compiled with `javac` against fastutil 8.5
 
 ## Not done
 
-- d = 9, 10 and d ≥ 12: no automaton extracted from 10⁸ terms (states appear very late). A conjectured k-block substitution structure for d ≤ 30 is in `RESULT.md`.
+- d ≥ 16: not attempted. Walnut base-17+ will need the split form throughout and more memory.
 - The general (1,d) family for all d, and the full Clergyman's conjecture: open.
 - No independent check by the paper's authors yet.

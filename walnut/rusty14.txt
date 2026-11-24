@@ -1,0 +1,11 @@
+def a1O "?msd_15 n>0 & s+19=31*n+RUSTYO[n-1]":
+def b2O "?msd_15 Es $a1O(n,s) & 15*t<=s+2 & s+2<15*t+15":
+def b1O "?msd_15 Es,t $a1O(n,s) & $b2O(n,t) & u+14*t=s":
+eval r14_total "?msd_15 An n>0 => (Es,t,u $a1O(n,s) & $b1O(n,t) & $b2O(n,u))":
+eval r14_init "?msd_15 $b1O(1,1) & $b2O(1,2) & $a1O(1,29)":
+eval r14_order "?msd_15 An,s,t,u ($b1O(n,s) & $b2O(n,t) & $b1O(n+1,u)) => (s<t & t<u)":
+eval r14_b1_new "?msd_15 An,s,m ($b1O(n,s) & m<n & m>0) => (~$a1O(m,s))":
+eval r14_b2_new "?msd_15 An,s,m ($b2O(n,s) & m<n & m>0) => (~$a1O(m,s))":
+eval r14_mex_b1 "?msd_15 An,s,t ($b1O(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b1O(m,t)|$b2O(m,t)|$a1O(m,t)))":
+eval r14_mex_b2 "?msd_15 An,u,s,t ($b1O(n,u) & $b2O(n,s) & u<t & t<s) => (Em m>0 & m<n & $a1O(m,t))":
+eval r14_sum "?msd_15 An,s,t ($b1O(n,s) & $b2O(n,t)) => $a1O(n,s+14*t)":

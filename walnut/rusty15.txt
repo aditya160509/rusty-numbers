@@ -1,0 +1,11 @@
+def a1P "?msd_16 n>0 & s+21=33*n+RUSTYP[n-1]":
+def b2P "?msd_16 Es $a1P(n,s) & 16*t<=s+2 & s+2<16*t+16":
+def b1P "?msd_16 Es,t $a1P(n,s) & $b2P(n,t) & u+15*t=s":
+eval r15_total "?msd_16 An n>0 => (Es,t,u $a1P(n,s) & $b1P(n,t) & $b2P(n,u))":
+eval r15_init "?msd_16 $b1P(1,1) & $b2P(1,2) & $a1P(1,31)":
+eval r15_order "?msd_16 An,s,t,u ($b1P(n,s) & $b2P(n,t) & $b1P(n+1,u)) => (s<t & t<u)":
+eval r15_b1_new "?msd_16 An,s,m ($b1P(n,s) & m<n & m>0) => (~$a1P(m,s))":
+eval r15_b2_new "?msd_16 An,s,m ($b2P(n,s) & m<n & m>0) => (~$a1P(m,s))":
+eval r15_mex_b1 "?msd_16 An,s,t ($b1P(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b1P(m,t)|$b2P(m,t)|$a1P(m,t)))":
+eval r15_mex_b2 "?msd_16 An,u,s,t ($b1P(n,u) & $b2P(n,s) & u<t & t<s) => (Em m>0 & m<n & $a1P(m,t))":
+eval r15_sum "?msd_16 An,s,t ($b1P(n,s) & $b2P(n,t)) => $a1P(n,s+15*t)":

@@ -1,0 +1,11 @@
+def a1J "?msd_10 n>0 & s+13=21*n+RUSTYJ[n-1]":
+def b2J "?msd_10 Es $a1J(n,s) & 10*t<=s+2 & s+2<10*t+10":
+def b1J "?msd_10 Es,t $a1J(n,s) & $b2J(n,t) & u+9*t=s":
+eval r9_total "?msd_10 An n>0 => (Es,t,u $a1J(n,s) & $b1J(n,t) & $b2J(n,u))":
+eval r9_init "?msd_10 $b1J(1,1) & $b2J(1,2) & $a1J(1,19)":
+eval r9_order "?msd_10 An,s,t,u ($b1J(n,s) & $b2J(n,t) & $b1J(n+1,u)) => (s<t & t<u)":
+eval r9_b1_new "?msd_10 An,s,m ($b1J(n,s) & m<n & m>0) => (~$a1J(m,s))":
+eval r9_b2_new "?msd_10 An,s,m ($b2J(n,s) & m<n & m>0) => (~$a1J(m,s))":
+eval r9_mex_b1 "?msd_10 An,s,t ($b1J(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b1J(m,t)|$b2J(m,t)|$a1J(m,t)))":
+eval r9_mex_b2 "?msd_10 An,u,s,t ($b1J(n,u) & $b2J(n,s) & u<t & t<s) => (Em m>0 & m<n & $a1J(m,t))":
+eval r9_sum "?msd_10 An,s,t ($b1J(n,s) & $b2J(n,t)) => $a1J(n,s+9*t)":

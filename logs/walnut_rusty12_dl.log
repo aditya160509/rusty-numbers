@@ -1,0 +1,131 @@
+Welcome to Walnut! Type "help;" to see all available commands.
+
+[Walnut]$ def a1M "?msd_13 n>0 & s+17=27*n+RUSTYM[n-1]":
+computed ~:1 states - 6ms
+n>0:2 states - 17ms
+computed ~:1 states - 0ms
+computed ~:2 states - 1ms
+ (s+17)=((27*n)+RUSTYM[(n-1)]):70 states - 20ms
+  (n>0&(s+17)=((27*n)+RUSTYM[(n-1)])):70 states - 2ms
+Total computation time: 201604ms.
+def b2M "?msd_13 Es $a1M(n,s) & 13*t<=s+2 & s+2<13*t+13":
+(13*t)<=(s+2):16 states - 12ms
+ (a1M(n,s))&(13*t)<=(s+2)):670 states - 71ms
+  (s+2)<((13*t)+13):14 states - 12ms
+   ((a1M(n,s))&(13*t)<=(s+2))&(s+2)<((13*t)+13)):592 states - 60ms
+    (E s ((a1M(n,s))&(13*t)<=(s+2))&(s+2)<((13*t)+13))):95 states - 5ms
+Total computation time: 169ms.
+def b1M "?msd_13 Es,t $a1M(n,s) & $b2M(n,t) & u+12*t=s":
+(a1M(n,s))&b2M(n,t))):592 states - 85ms
+ (u+(12*t))=s:13 states - 37ms
+  ((a1M(n,s))&b2M(n,t)))&(u+(12*t))=s):592 states - 2358ms
+   (E s , t ((a1M(n,s))&b2M(n,t)))&(u+(12*t))=s)):85 states - 4ms
+Total computation time: 2528ms.
+eval r12_total "?msd_13 An n>0 => (Es,t,u $a1M(n,s) & $b1M(n,t) & $b2M(n,u))":
+n>0:2 states - 0ms
+ (a1M(n,s))&b1M(n,t))):552 states - 77ms
+  ((a1M(n,s))&b1M(n,t)))&b2M(n,u))):592 states - 876ms
+   (E s , t , u ((a1M(n,s))&b1M(n,t)))&b2M(n,u)))):2 states - 3ms
+    (n>0=>(E s , t , u ((a1M(n,s))&b1M(n,t)))&b2M(n,u))))):1 states - 0ms
+     (A n (n>0=>(E s , t , u ((a1M(n,s))&b1M(n,t)))&b2M(n,u)))))):1 states - 0ms
+Total computation time: 959ms.
+____
+TRUE
+eval r12_init "?msd_13 $b1M(1,1) & $b2M(1,2) & $a1M(1,25)":
+(b1M(1,1))&b2M(1,2))):0 states - 0ms
+ ((b1M(1,1))&b2M(1,2)))&a1M(1,25))):0 states - 0ms
+Total computation time: 6ms.
+____
+TRUE
+eval r12_order "?msd_13 An,s,t,u ($b1M(n,s) & $b2M(n,t) & $b1M(n+1,u)) => (s<t & t<u)":
+(b1M(n,s))&b2M(n,t))):129 states - 14ms
+ ((b1M(n,s))&b2M(n,t)))&b1M((n+1),u))):180 states - 197ms
+  s<t:2 states - 0ms
+   t<u:2 states - 0ms
+    (s<t&t<u):4 states - 5ms
+     (((b1M(n,s))&b2M(n,t)))&b1M((n+1),u)))=>(s<t&t<u)):1 states - 123008ms
+      (A n , s , t , u (((b1M(n,s))&b2M(n,t)))&b1M((n+1),u)))=>(s<t&t<u))):1 states - 6ms
+Total computation time: 123243ms.
+____
+TRUE
+eval r12_b1_new "?msd_13 An,s,m ($b1M(n,s) & m<n & m>0) => (~$a1M(m,s))":
+m<n:2 states - 0ms
+ (b1M(n,s))&m<n):164 states - 22ms
+  m>0:2 states - 1ms
+   ((b1M(n,s))&m<n)&m>0):250 states - 35ms
+    ~a1M(m,s)):71 states - 4ms
+     (((b1M(n,s))&m<n)&m>0)=>~a1M(m,s))):1 states - 1804ms
+      (A n , s , m (((b1M(n,s))&m<n)&m>0)=>~a1M(m,s)))):1 states - 0ms
+Total computation time: 1867ms.
+____
+TRUE
+eval r12_b2_new "?msd_13 An,s,m ($b2M(n,s) & m<n & m>0) => (~$a1M(m,s))":
+m<n:2 states - 0ms
+ (b2M(n,s))&m<n):172 states - 22ms
+  m>0:2 states - 0ms
+   ((b2M(n,s))&m<n)&m>0):255 states - 33ms
+    ~a1M(m,s)):71 states - 4ms
+     (((b2M(n,s))&m<n)&m>0)=>~a1M(m,s))):1 states - 1706ms
+      (A n , s , m (((b2M(n,s))&m<n)&m>0)=>~a1M(m,s)))):1 states - 0ms
+Total computation time: 1767ms.
+____
+TRUE
+eval r12_mex_b1 "?msd_13 An,s,t ($b1M(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b1M(m,t)|$b2M(m,t)|$a1M(m,t)))":
+t>0:2 states - 0ms
+ (b1M(n,s))&t>0):168 states - 23ms
+  t<s:2 states - 0ms
+   ((b1M(n,s))&t>0)&t<s):252 states - 111ms
+    m>0:2 states - 0ms
+     m<n:2 states - 0ms
+      (m>0&m<n):4 states - 0ms
+       (b1M(m,t))|b2M(m,t))):99 states - 44ms
+        ((b1M(m,t))|b2M(m,t)))|a1M(m,t))):168 states - 69ms
+         ((m>0&m<n)&((b1M(m,t))|b2M(m,t)))|a1M(m,t)))):318 states - 58ms
+          (E m ((m>0&m<n)&((b1M(m,t))|b2M(m,t)))|a1M(m,t))))):262 states - 34ms
+           (((b1M(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b1M(m,t))|b2M(m,t)))|a1M(m,t)))))):1 states - 2076ms
+            (A n , s , t (((b1M(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b1M(m,t))|b2M(m,t)))|a1M(m,t))))))):1 states - 0ms
+Total computation time: 2419ms.
+____
+TRUE
+eval r12_mex_b2 "?msd_13 An,u,s,t ($b1M(n,u) & $b2M(n,s) & u<t & t<s) => (Em m>0 & m<n & $a1M(m,t))":
+(b1M(n,u))&b2M(n,s))):129 states - 21ms
+ u<t:2 states - 0ms
+  ((b1M(n,u))&b2M(n,s)))&u<t):248 states - 144ms
+   t<s:2 states - 0ms
+    (((b1M(n,u))&b2M(n,s)))&u<t)&t<s):120 states - 365ms
+     m>0:2 states - 0ms
+      m<n:2 states - 0ms
+       (m>0&m<n):4 states - 1ms
+        ((m>0&m<n)&a1M(m,t))):135 states - 23ms
+         (E m ((m>0&m<n)&a1M(m,t)))):147 states - 14ms
+          ((((b1M(n,u))&b2M(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a1M(m,t))))):1 states - 16828ms
+           (A n , u , s , t ((((b1M(n,u))&b2M(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a1M(m,t)))))):1 states - 5ms
+Total computation time: 17404ms.
+____
+TRUE
+eval r12_sum "?msd_13 An,s,t ($b1M(n,s) & $b2M(n,t)) => $a1M(n,s+12*t)":
+(b1M(n,s))&b2M(n,t))):129 states - 17ms
+ ((b1M(n,s))&b2M(n,t)))=>a1M(n,(s+(12*t))))):1 states - 27974ms
+  (A n , s , t ((b1M(n,s))&b2M(n,t)))=>a1M(n,(s+(12*t)))))):1 states - 1ms
+Total computation time: 28847ms.
+____
+TRUE
+
+[Walnut]$       381.00 real       500.22 user         3.33 sys
+          2915581952  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              923158  page reclaims
+                   5  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                 301  signals received
+                  11  voluntary context switches
+              279562  involuntary context switches
+       9894408890497  instructions retired
+       1971078000475  cycles elapsed
+          2893646752  peak memory footprint

@@ -1,0 +1,131 @@
+Welcome to Walnut! Type "help;" to see all available commands.
+
+[Walnut]$ def a1J "?msd_10 n>0 & s+13=21*n+RUSTYJ[n-1]":
+computed ~:1 states - 7ms
+n>0:2 states - 19ms
+computed ~:1 states - 0ms
+computed ~:2 states - 1ms
+ (s+13)=((21*n)+RUSTYJ[(n-1)]):54 states - 10ms
+  (n>0&(s+13)=((21*n)+RUSTYJ[(n-1)])):54 states - 1ms
+Total computation time: 20831ms.
+def b2J "?msd_10 Es $a1J(n,s) & 10*t<=s+2 & s+2<10*t+10":
+(10*t)<=(s+2):13 states - 7ms
+ (a1J(n,s))&(10*t)<=(s+2)):424 states - 27ms
+  (s+2)<((10*t)+10):11 states - 6ms
+   ((a1J(n,s))&(10*t)<=(s+2))&(s+2)<((10*t)+10)):364 states - 20ms
+    (E s ((a1J(n,s))&(10*t)<=(s+2))&(s+2)<((10*t)+10))):72 states - 3ms
+Total computation time: 69ms.
+def b1J "?msd_10 Es,t $a1J(n,s) & $b2J(n,t) & u+9*t=s":
+(a1J(n,s))&b2J(n,t))):364 states - 30ms
+ (u+(9*t))=s:10 states - 8ms
+  ((a1J(n,s))&b2J(n,t)))&(u+(9*t))=s):364 states - 555ms
+   (E s , t ((a1J(n,s))&b2J(n,t)))&(u+(9*t))=s)):65 states - 3ms
+Total computation time: 671ms.
+eval r9_total "?msd_10 An n>0 => (Es,t,u $a1J(n,s) & $b1J(n,t) & $b2J(n,u))":
+n>0:2 states - 0ms
+ (a1J(n,s))&b1J(n,t))):334 states - 24ms
+  ((a1J(n,s))&b1J(n,t)))&b2J(n,u))):364 states - 175ms
+   (E s , t , u ((a1J(n,s))&b1J(n,t)))&b2J(n,u)))):2 states - 2ms
+    (n>0=>(E s , t , u ((a1J(n,s))&b1J(n,t)))&b2J(n,u))))):1 states - 0ms
+     (A n (n>0=>(E s , t , u ((a1J(n,s))&b1J(n,t)))&b2J(n,u)))))):1 states - 0ms
+Total computation time: 203ms.
+____
+TRUE
+eval r9_init "?msd_10 $b1J(1,1) & $b2J(1,2) & $a1J(1,19)":
+(b1J(1,1))&b2J(1,2))):0 states - 0ms
+ ((b1J(1,1))&b2J(1,2)))&a1J(1,19))):0 states - 0ms
+Total computation time: 3ms.
+____
+TRUE
+eval r9_order "?msd_10 An,s,t,u ($b1J(n,s) & $b2J(n,t) & $b1J(n+1,u)) => (s<t & t<u)":
+(b1J(n,s))&b2J(n,t))):98 states - 5ms
+ ((b1J(n,s))&b2J(n,t)))&b1J((n+1),u))):136 states - 50ms
+  s<t:2 states - 0ms
+   t<u:2 states - 0ms
+    (s<t&t<u):4 states - 2ms
+     (((b1J(n,s))&b2J(n,t)))&b1J((n+1),u)))=>(s<t&t<u)):1 states - 13648ms
+      (A n , s , t , u (((b1J(n,s))&b2J(n,t)))&b1J((n+1),u)))=>(s<t&t<u))):1 states - 2ms
+Total computation time: 13714ms.
+____
+TRUE
+eval r9_b1_new "?msd_10 An,s,m ($b1J(n,s) & m<n & m>0) => (~$a1J(m,s))":
+m<n:2 states - 0ms
+ (b1J(n,s))&m<n):124 states - 9ms
+  m>0:2 states - 0ms
+   ((b1J(n,s))&m<n)&m>0):190 states - 14ms
+    ~a1J(m,s)):55 states - 1ms
+     (((b1J(n,s))&m<n)&m>0)=>~a1J(m,s))):1 states - 422ms
+      (A n , s , m (((b1J(n,s))&m<n)&m>0)=>~a1J(m,s)))):1 states - 0ms
+Total computation time: 447ms.
+____
+TRUE
+eval r9_b2_new "?msd_10 An,s,m ($b2J(n,s) & m<n & m>0) => (~$a1J(m,s))":
+m<n:2 states - 0ms
+ (b2J(n,s))&m<n):129 states - 9ms
+  m>0:2 states - 0ms
+   ((b2J(n,s))&m<n)&m>0):192 states - 13ms
+    ~a1J(m,s)):55 states - 1ms
+     (((b2J(n,s))&m<n)&m>0)=>~a1J(m,s))):1 states - 381ms
+      (A n , s , m (((b2J(n,s))&m<n)&m>0)=>~a1J(m,s)))):1 states - 0ms
+Total computation time: 406ms.
+____
+TRUE
+eval r9_mex_b1 "?msd_10 An,s,t ($b1J(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b1J(m,t)|$b2J(m,t)|$a1J(m,t)))":
+t>0:2 states - 1ms
+ (b1J(n,s))&t>0):128 states - 8ms
+  t<s:2 states - 0ms
+   ((b1J(n,s))&t>0)&t<s):192 states - 30ms
+    m>0:2 states - 0ms
+     m<n:2 states - 0ms
+      (m>0&m<n):4 states - 0ms
+       (b1J(m,t))|b2J(m,t))):76 states - 12ms
+        ((b1J(m,t))|b2J(m,t)))|a1J(m,t))):129 states - 19ms
+         ((m>0&m<n)&((b1J(m,t))|b2J(m,t)))|a1J(m,t)))):244 states - 23ms
+          (E m ((m>0&m<n)&((b1J(m,t))|b2J(m,t)))|a1J(m,t))))):200 states - 14ms
+           (((b1J(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b1J(m,t))|b2J(m,t)))|a1J(m,t)))))):1 states - 533ms
+            (A n , s , t (((b1J(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b1J(m,t))|b2J(m,t)))|a1J(m,t))))))):1 states - 0ms
+Total computation time: 642ms.
+____
+TRUE
+eval r9_mex_b2 "?msd_10 An,u,s,t ($b1J(n,u) & $b2J(n,s) & u<t & t<s) => (Em m>0 & m<n & $a1J(m,t))":
+(b1J(n,u))&b2J(n,s))):98 states - 5ms
+ u<t:2 states - 0ms
+  ((b1J(n,u))&b2J(n,s)))&u<t):190 states - 48ms
+   t<s:2 states - 0ms
+    (((b1J(n,u))&b2J(n,s)))&u<t)&t<s):93 states - 74ms
+     m>0:2 states - 0ms
+      m<n:2 states - 0ms
+       (m>0&m<n):4 states - 0ms
+        ((m>0&m<n)&a1J(m,t))):104 states - 8ms
+         (E m ((m>0&m<n)&a1J(m,t)))):112 states - 6ms
+          ((((b1J(n,u))&b2J(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a1J(m,t))))):1 states - 3034ms
+           (A n , u , s , t ((((b1J(n,u))&b2J(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a1J(m,t)))))):1 states - 1ms
+Total computation time: 3178ms.
+____
+TRUE
+eval r9_sum "?msd_10 An,s,t ($b1J(n,s) & $b2J(n,t)) => $a1J(n,s+9*t)":
+(b1J(n,s))&b2J(n,t))):98 states - 5ms
+ ((b1J(n,s))&b2J(n,t)))=>a1J(n,(s+(9*t))))):1 states - 3364ms
+  (A n , s , t ((b1J(n,s))&b2J(n,t)))=>a1J(n,(s+(9*t)))))):1 states - 0ms
+Total computation time: 3568ms.
+____
+TRUE
+
+[Walnut]$        43.97 real        52.56 user         0.70 sys
+          1692729344  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              235311  page reclaims
+                1779  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                  28  signals received
+                 149  voluntary context switches
+               45248  involuntary context switches
+       1078237469893  instructions retired
+        209583275616  cycles elapsed
+          1669630016  peak memory footprint

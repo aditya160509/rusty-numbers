@@ -1,0 +1,3 @@
+def loP "?msd_16 Eu $b1P(n,u) & u<t":
+def hiP "?msd_16 Es $b2P(n,s) & t<s":
+eval r15_mex_b2 "?msd_16 An,t ($loP(n,t) & $hiP(n,t)) => $eaP(n,t)":
