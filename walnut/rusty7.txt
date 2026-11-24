@@ -1,0 +1,11 @@
+def a17 "?msd_8 n>0 & s+10=17*n+RUSTYH[n-1]":
+def b27 "?msd_8 Es $a17(n,s) & 8*t<=s+2 & s+2<8*t+8":
+def b17 "?msd_8 Es,t $a17(n,s) & $b27(n,t) & u+7*t=s":
+eval r7_total "?msd_8 An n>0 => (Es,t,u $a17(n,s) & $b17(n,t) & $b27(n,u))":
+eval r7_init "?msd_8 $b17(1,1) & $b27(1,2) & $a17(1,15)":
+eval r7_order "?msd_8 An,s,t,u ($b17(n,s) & $b27(n,t) & $b17(n+1,u)) => (s<t & t<u)":
+eval r7_b1_new "?msd_8 An,s,m ($b17(n,s) & m<n & m>0) => (~$a17(m,s))":
+eval r7_b2_new "?msd_8 An,s,m ($b27(n,s) & m<n & m>0) => (~$a17(m,s))":
+eval r7_mex_b1 "?msd_8 An,s,t ($b17(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b17(m,t)|$b27(m,t)|$a17(m,t)))":
+eval r7_mex_b2 "?msd_8 An,u,s,t ($b17(n,u) & $b27(n,s) & u<t & t<s) => (Em m>0 & m<n & $a17(m,t))":
+eval r7_sum "?msd_8 An,s,t ($b17(n,s) & $b27(n,t)) => $a17(n,s+7*t)":

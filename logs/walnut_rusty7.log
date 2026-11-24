@@ -1,0 +1,131 @@
+Welcome to Walnut! Type "help;" to see all available commands.
+
+[Walnut]$ def a17 "?msd_8 n>0 & s+10=17*n+RUSTYH[n-1]":
+computed ~:1 states - 6ms
+n>0:2 states - 18ms
+computed ~:1 states - 0ms
+computed ~:2 states - 1ms
+ (s+10)=((17*n)+RUSTYH[(n-1)]):42 states - 6ms
+  (n>0&(s+10)=((17*n)+RUSTYH[(n-1)])):42 states - 0ms
+Total computation time: 2882ms.
+def b27 "?msd_8 Es $a17(n,s) & 8*t<=s+2 & s+2<8*t+8":
+(8*t)<=(s+2):11 states - 3ms
+ (a17(n,s))&(8*t)<=(s+2)):280 states - 11ms
+  (s+2)<((8*t)+8):9 states - 3ms
+   ((a17(n,s))&(8*t)<=(s+2))&(s+2)<((8*t)+8)):235 states - 5ms
+    (E s ((a17(n,s))&(8*t)<=(s+2))&(s+2)<((8*t)+8))):55 states - 2ms
+Total computation time: 26ms.
+def b17 "?msd_8 Es,t $a17(n,s) & $b27(n,t) & u+7*t=s":
+(a17(n,s))&b27(n,t))):235 states - 10ms
+ (u+(7*t))=s:8 states - 3ms
+  ((a17(n,s))&b27(n,t)))&(u+(7*t))=s):235 states - 131ms
+   (E s , t ((a17(n,s))&b27(n,t)))&(u+(7*t))=s)):50 states - 2ms
+Total computation time: 184ms.
+eval r7_total "?msd_8 An n>0 => (Es,t,u $a17(n,s) & $b17(n,t) & $b27(n,u))":
+n>0:2 states - 0ms
+ (a17(n,s))&b17(n,t))):210 states - 10ms
+  ((a17(n,s))&b17(n,t)))&b27(n,u))):235 states - 52ms
+   (E s , t , u ((a17(n,s))&b17(n,t)))&b27(n,u)))):2 states - 0ms
+    (n>0=>(E s , t , u ((a17(n,s))&b17(n,t)))&b27(n,u))))):1 states - 0ms
+     (A n (n>0=>(E s , t , u ((a17(n,s))&b17(n,t)))&b27(n,u)))))):1 states - 1ms
+Total computation time: 65ms.
+____
+TRUE
+eval r7_init "?msd_8 $b17(1,1) & $b27(1,2) & $a17(1,15)":
+(b17(1,1))&b27(1,2))):0 states - 0ms
+ ((b17(1,1))&b27(1,2)))&a17(1,15))):0 states - 0ms
+Total computation time: 1ms.
+____
+TRUE
+eval r7_order "?msd_8 An,s,t,u ($b17(n,s) & $b27(n,t) & $b17(n+1,u)) => (s<t & t<u)":
+(b17(n,s))&b27(n,t))):77 states - 2ms
+ ((b17(n,s))&b27(n,t)))&b17((n+1),u))):106 states - 20ms
+  s<t:2 states - 0ms
+   t<u:2 states - 0ms
+    (s<t&t<u):4 states - 1ms
+     (((b17(n,s))&b27(n,t)))&b17((n+1),u)))=>(s<t&t<u)):1 states - 2172ms
+      (A n , s , t , u (((b17(n,s))&b27(n,t)))&b17((n+1),u)))=>(s<t&t<u))):1 states - 0ms
+Total computation time: 2200ms.
+____
+TRUE
+eval r7_b1_new "?msd_8 An,s,m ($b17(n,s) & m<n & m>0) => (~$a17(m,s))":
+m<n:2 states - 0ms
+ (b17(n,s))&m<n):94 states - 5ms
+  m>0:2 states - 0ms
+   ((b17(n,s))&m<n)&m>0):145 states - 7ms
+    ~a17(m,s)):43 states - 1ms
+     (((b17(n,s))&m<n)&m>0)=>~a17(m,s))):1 states - 125ms
+      (A n , s , m (((b17(n,s))&m<n)&m>0)=>~a17(m,s)))):1 states - 0ms
+Total computation time: 138ms.
+____
+TRUE
+eval r7_b2_new "?msd_8 An,s,m ($b27(n,s) & m<n & m>0) => (~$a17(m,s))":
+m<n:2 states - 0ms
+ (b27(n,s))&m<n):98 states - 4ms
+  m>0:2 states - 0ms
+   ((b27(n,s))&m<n)&m>0):147 states - 6ms
+    ~a17(m,s)):43 states - 1ms
+     (((b27(n,s))&m<n)&m>0)=>~a17(m,s))):1 states - 114ms
+      (A n , s , m (((b27(n,s))&m<n)&m>0)=>~a17(m,s)))):1 states - 0ms
+Total computation time: 125ms.
+____
+TRUE
+eval r7_mex_b1 "?msd_8 An,s,t ($b17(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b17(m,t)|$b27(m,t)|$a17(m,t)))":
+t>0:2 states - 0ms
+ (b17(n,s))&t>0):98 states - 4ms
+  t<s:2 states - 0ms
+   ((b17(n,s))&t>0)&t<s):147 states - 11ms
+    m>0:2 states - 0ms
+     m<n:2 states - 0ms
+      (m>0&m<n):4 states - 0ms
+       (b17(m,t))|b27(m,t))):58 states - 11ms
+        ((b17(m,t))|b27(m,t)))|a17(m,t))):99 states - 7ms
+         ((m>0&m<n)&((b17(m,t))|b27(m,t)))|a17(m,t)))):188 states - 10ms
+          (E m ((m>0&m<n)&((b17(m,t))|b27(m,t)))|a17(m,t))))):154 states - 7ms
+           (((b17(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b17(m,t))|b27(m,t)))|a17(m,t)))))):1 states - 251ms
+            (A n , s , t (((b17(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b17(m,t))|b27(m,t)))|a17(m,t))))))):1 states - 0ms
+Total computation time: 306ms.
+____
+TRUE
+eval r7_mex_b2 "?msd_8 An,u,s,t ($b17(n,u) & $b27(n,s) & u<t & t<s) => (Em m>0 & m<n & $a17(m,t))":
+(b17(n,u))&b27(n,s))):77 states - 2ms
+ u<t:2 states - 0ms
+  ((b17(n,u))&b27(n,s)))&u<t):143 states - 17ms
+   t<s:2 states - 0ms
+    (((b17(n,u))&b27(n,s)))&u<t)&t<s):67 states - 20ms
+     m>0:2 states - 0ms
+      m<n:2 states - 0ms
+       (m>0&m<n):4 states - 0ms
+        ((m>0&m<n)&a17(m,t))):81 states - 6ms
+         (E m ((m>0&m<n)&a17(m,t)))):86 states - 3ms
+          ((((b17(n,u))&b27(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a17(m,t))))):1 states - 639ms
+           (A n , u , s , t ((((b17(n,u))&b27(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a17(m,t)))))):1 states - 1ms
+Total computation time: 690ms.
+____
+TRUE
+eval r7_sum "?msd_8 An,s,t ($b17(n,s) & $b27(n,t)) => $a17(n,s+7*t)":
+(b17(n,s))&b27(n,t))):77 states - 2ms
+ ((b17(n,s))&b27(n,t)))=>a17(n,(s+(7*t))))):1 states - 582ms
+  (A n , s , t ((b17(n,s))&b27(n,t)))=>a17(n,(s+(7*t)))))):1 states - 1ms
+Total computation time: 651ms.
+____
+TRUE
+
+[Walnut]$         7.46 real        11.01 user         0.16 sys
+           707952640  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               53884  page reclaims
+                1770  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   3  signals received
+                 146  voluntary context switches
+               11755  involuntary context switches
+        220560143872  instructions retired
+         43832750167  cycles elapsed
+           684885288  peak memory footprint

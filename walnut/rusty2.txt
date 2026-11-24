@@ -1,0 +1,11 @@
+def a12 "?msd_3 n>0 & s+3=7*n+RUSTYC[n-1]":
+def b22 "?msd_3 Es $a12(n,s) & 3*t<=s+2 & s+2<3*t+3":
+def b12 "?msd_3 Es,t $a12(n,s) & $b22(n,t) & u+2*t=s":
+eval r2_total "?msd_3 An n>0 => (Es,t,u $a12(n,s) & $b12(n,t) & $b22(n,u))":
+eval r2_init "?msd_3 $b12(1,1) & $b22(1,2) & $a12(1,5)":
+eval r2_order "?msd_3 An,s,t,u ($b12(n,s) & $b22(n,t) & $b12(n+1,u)) => (s<t & t<u)":
+eval r2_b1_new "?msd_3 An,s,m ($b12(n,s) & m<n & m>0) => (~$a12(m,s))":
+eval r2_b2_new "?msd_3 An,s,m ($b22(n,s) & m<n & m>0) => (~$a12(m,s))":
+eval r2_mex_b1 "?msd_3 An,s,t ($b12(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b12(m,t)|$b22(m,t)|$a12(m,t)))":
+eval r2_mex_b2 "?msd_3 An,u,s,t ($b12(n,u) & $b22(n,s) & u<t & t<s) => (Em m>0 & m<n & $a12(m,t))":
+eval r2_sum "?msd_3 An,s,t ($b12(n,s) & $b22(n,t)) => $a12(n,s+2*t)":

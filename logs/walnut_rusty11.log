@@ -1,0 +1,81 @@
+Welcome to Walnut! Type "help;" to see all available commands.
+
+[Walnut]$ def a111 "?msd_12 n>0 & s+15=25*n+RUSTYL[n-1]":
+computed ~:1 states - 6ms
+n>0:2 states - 17ms
+computed ~:1 states - 1ms
+computed ~:2 states - 0ms
+ (s+15)=((25*n)+RUSTYL[(n-1)]):62 states - 15ms
+  (n>0&(s+15)=((25*n)+RUSTYL[(n-1)])):62 states - 1ms
+Total computation time: 91145ms.
+def b211 "?msd_12 Es $a111(n,s) & 12*t<=s+2 & s+2<12*t+12":
+(12*t)<=(s+2):15 states - 9ms
+ (a111(n,s))&(12*t)<=(s+2)):565 states - 44ms
+  (s+2)<((12*t)+12):13 states - 10ms
+   ((a111(n,s))&(12*t)<=(s+2))&(s+2)<((12*t)+12)):498 states - 38ms
+    (E s ((a111(n,s))&(12*t)<=(s+2))&(s+2)<((12*t)+12))):85 states - 3ms
+Total computation time: 111ms.
+def b111 "?msd_12 Es,t $a111(n,s) & $b211(n,t) & u+11*t=s":
+(a111(n,s))&b211(n,t))):498 states - 56ms
+ (u+(11*t))=s:12 states - 22ms
+  ((a111(n,s))&b211(n,t)))&(u+(11*t))=s):498 states - 1391ms
+   (E s , t ((a111(n,s))&b211(n,t)))&(u+(11*t))=s)):76 states - 3ms
+Total computation time: 1884ms.
+eval r11_total "?msd_12 An n>0 => (Es,t,u $a111(n,s) & $b111(n,t) & $b211(n,u))":
+n>0:2 states - 1ms
+ (a111(n,s))&b111(n,t))):460 states - 50ms
+  ((a111(n,s))&b111(n,t)))&b211(n,u))):498 states - 494ms
+   (E s , t , u ((a111(n,s))&b111(n,t)))&b211(n,u)))):2 states - 2ms
+    (n>0=>(E s , t , u ((a111(n,s))&b111(n,t)))&b211(n,u))))):1 states - 0ms
+     (A n (n>0=>(E s , t , u ((a111(n,s))&b111(n,t)))&b211(n,u)))))):1 states - 0ms
+Total computation time: 549ms.
+____
+TRUE
+eval r11_init "?msd_12 $b111(1,1) & $b211(1,2) & $a111(1,23)":
+(b111(1,1))&b211(1,2))):0 states - 0ms
+ ((b111(1,1))&b211(1,2)))&a111(1,23))):0 states - 0ms
+Total computation time: 5ms.
+____
+TRUE
+eval r11_order "?msd_12 An,s,t,u ($b111(n,s) & $b211(n,t) & $b111(n+1,u)) => (s<t & t<u)":
+(b111(n,s))&b211(n,t))):117 states - 9ms
+ ((b111(n,s))&b211(n,t)))&b111((n+1),u))):162 states - 123ms
+  s<t:2 states - 0ms
+   t<u:2 states - 0ms
+    (s<t&t<u):4 states - 4ms
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at java.base/java.lang.Integer.valueOf(Integer.java:1083)
+	at it.unimi.dsi.fastutil.ints.IntIterator.next(IntIterator.java:46)
+	at it.unimi.dsi.fastutil.ints.IntListIterator.next(IntListIterator.java:103)
+	at it.unimi.dsi.fastutil.ints.IntListIterator.next(IntListIterator.java:31)
+	at Automata.Automaton.crossProduct(Automaton.java:1647)
+	at Automata.Automaton.imply(Automaton.java:1831)
+	at Token.LogicalOperator.act(LogicalOperator.java:74)
+	at Main.Computer.compute(Computer.java:113)
+	at Main.Computer.<init>(Computer.java:49)
+	at Main.Prover.eval_def_commands(Prover.java:565)
+	at Main.Prover.dispatch(Prover.java:383)
+	at Main.Prover.readBuffer(Prover.java:335)
+	at Main.Prover.loadCommand(Prover.java:538)
+	at Main.Prover.dispatch(Prover.java:381)
+	at Main.Prover.readBuffer(Prover.java:335)
+	at Main.Prover.run(Prover.java:289)
+	at Main.Prover.main(Prover.java:255)
+      494.99 real      2425.87 user        27.16 sys
+          1079099392  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              224544  page reclaims
+                  13  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                 163  signals received
+                   8  voluntary context switches
+             4223132  involuntary context switches
+      23235796082193  instructions retired
+       5302399708456  cycles elapsed
+          1056933496  peak memory footprint

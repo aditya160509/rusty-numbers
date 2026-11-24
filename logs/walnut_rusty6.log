@@ -1,0 +1,19 @@
+def a16 "?msd_7 n>0 & s+9=15*n+RUSTYG[n-1]":
+def b26 "?msd_7 Es $a16(n,s) & 7*t<=s+2 & s+2<7*t+7":
+def b16 "?msd_7 Es,t $a16(n,s) & $b26(n,t) & u+6*t=s":
+eval r6_total "?msd_7 An n>0 => (Es,t,u $a16(n,s) & $b16(n,t) & $b26(n,u))":
+TRUE
+eval r6_init "?msd_7 $b16(1,1) & $b26(1,2) & $a16(1,13)":
+TRUE
+eval r6_order "?msd_7 An,s,t,u ($b16(n,s) & $b26(n,t) & $b16(n+1,u)) => (s<t & t<u)":
+TRUE
+eval r6_b1_new "?msd_7 An,s,m ($b16(n,s) & m<n & m>0) => (~$a16(m,s))":
+TRUE
+eval r6_b2_new "?msd_7 An,s,m ($b26(n,s) & m<n & m>0) => (~$a16(m,s))":
+TRUE
+eval r6_mex_b1 "?msd_7 An,s,t ($b16(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b16(m,t)|$b26(m,t)|$a16(m,t)))":
+TRUE
+eval r6_mex_b2 "?msd_7 An,u,s,t ($b16(n,u) & $b26(n,s) & u<t & t<s) => (Em m>0 & m<n & $a16(m,t))":
+TRUE
+eval r6_sum "?msd_7 An,s,t ($b16(n,s) & $b26(n,t)) => $a16(n,s+6*t)":
+TRUE

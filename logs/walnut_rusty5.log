@@ -1,0 +1,19 @@
+def a15 "?msd_6 n>0 & s+7=13*n+RUSTYF[n-1]":
+def b25 "?msd_6 Es $a15(n,s) & 6*t<=s+2 & s+2<6*t+6":
+def b15 "?msd_6 Es,t $a15(n,s) & $b25(n,t) & u+5*t=s":
+eval r5_total "?msd_6 An n>0 => (Es,t,u $a15(n,s) & $b15(n,t) & $b25(n,u))":
+TRUE
+eval r5_init "?msd_6 $b15(1,1) & $b25(1,2) & $a15(1,11)":
+TRUE
+eval r5_order "?msd_6 An,s,t,u ($b15(n,s) & $b25(n,t) & $b15(n+1,u)) => (s<t & t<u)":
+TRUE
+eval r5_b1_new "?msd_6 An,s,m ($b15(n,s) & m<n & m>0) => (~$a15(m,s))":
+TRUE
+eval r5_b2_new "?msd_6 An,s,m ($b25(n,s) & m<n & m>0) => (~$a15(m,s))":
+TRUE
+eval r5_mex_b1 "?msd_6 An,s,t ($b15(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b15(m,t)|$b25(m,t)|$a15(m,t)))":
+TRUE
+eval r5_mex_b2 "?msd_6 An,u,s,t ($b15(n,u) & $b25(n,s) & u<t & t<s) => (Em m>0 & m<n & $a15(m,t))":
+TRUE
+eval r5_sum "?msd_6 An,s,t ($b15(n,s) & $b25(n,t)) => $a15(n,s+5*t)":
+TRUE

@@ -1,0 +1,131 @@
+Welcome to Walnut! Type "help;" to see all available commands.
+
+[Walnut]$ def a13 "?msd_4 n>0 & s+5=9*n+RUSTYDTHREE[n-1]":
+computed ~:1 states - 6ms
+n>0:2 states - 17ms
+computed ~:1 states - 1ms
+computed ~:2 states - 1ms
+ (s+5)=((9*n)+RUSTYDTHREE[(n-1)]):22 states - 4ms
+  (n>0&(s+5)=((9*n)+RUSTYDTHREE[(n-1)])):22 states - 0ms
+Total computation time: 85ms.
+def b23 "?msd_4 Es $a13(n,s) & 4*t<=s+2 & s+2<4*t+4":
+(4*t)<=(s+2):7 states - 2ms
+ (a13(n,s))&(4*t)<=(s+2)):93 states - 2ms
+  (s+2)<((4*t)+4):5 states - 1ms
+   ((a13(n,s))&(4*t)<=(s+2))&(s+2)<((4*t)+4)):69 states - 0ms
+    (E s ((a13(n,s))&(4*t)<=(s+2))&(s+2)<((4*t)+4))):26 states - 2ms
+Total computation time: 10ms.
+def b13 "?msd_4 Es,t $a13(n,s) & $b23(n,t) & u+3*t=s":
+(a13(n,s))&b23(n,t))):69 states - 2ms
+ (u+(3*t))=s:4 states - 0ms
+  ((a13(n,s))&b23(n,t)))&(u+(3*t))=s):69 states - 3ms
+   (E s , t ((a13(n,s))&b23(n,t)))&(u+(3*t))=s)):25 states - 0ms
+Total computation time: 7ms.
+eval r3_total "?msd_4 An n>0 => (Es,t,u $a13(n,s) & $b13(n,t) & $b23(n,u))":
+n>0:2 states - 0ms
+ (a13(n,s))&b13(n,t))):60 states - 1ms
+  ((a13(n,s))&b13(n,t)))&b23(n,u))):69 states - 2ms
+   (E s , t , u ((a13(n,s))&b13(n,t)))&b23(n,u)))):2 states - 1ms
+    (n>0=>(E s , t , u ((a13(n,s))&b13(n,t)))&b23(n,u))))):1 states - 0ms
+     (A n (n>0=>(E s , t , u ((a13(n,s))&b13(n,t)))&b23(n,u)))))):1 states - 0ms
+Total computation time: 4ms.
+____
+TRUE
+eval r3_init "?msd_4 $b13(1,1) & $b23(1,2) & $a13(1,7)":
+(b13(1,1))&b23(1,2))):0 states - 0ms
+ ((b13(1,1))&b23(1,2)))&a13(1,7))):0 states - 0ms
+Total computation time: 0ms.
+____
+TRUE
+eval r3_order "?msd_4 An,s,t,u ($b13(n,s) & $b23(n,t) & $b13(n+1,u)) => (s<t & t<u)":
+(b13(n,s))&b23(n,t))):35 states - 0ms
+ ((b13(n,s))&b23(n,t)))&b13((n+1),u))):48 states - 1ms
+  s<t:2 states - 0ms
+   t<u:2 states - 0ms
+    (s<t&t<u):4 states - 0ms
+     (((b13(n,s))&b23(n,t)))&b13((n+1),u)))=>(s<t&t<u)):1 states - 25ms
+      (A n , s , t , u (((b13(n,s))&b23(n,t)))&b13((n+1),u)))=>(s<t&t<u))):1 states - 0ms
+Total computation time: 29ms.
+____
+TRUE
+eval r3_b1_new "?msd_4 An,s,m ($b13(n,s) & m<n & m>0) => (~$a13(m,s))":
+m<n:2 states - 0ms
+ (b13(n,s))&m<n):44 states - 1ms
+  m>0:2 states - 0ms
+   ((b13(n,s))&m<n)&m>0):70 states - 1ms
+    ~a13(m,s)):23 states - 0ms
+     (((b13(n,s))&m<n)&m>0)=>~a13(m,s))):1 states - 11ms
+      (A n , s , m (((b13(n,s))&m<n)&m>0)=>~a13(m,s)))):1 states - 0ms
+Total computation time: 15ms.
+____
+TRUE
+eval r3_b2_new "?msd_4 An,s,m ($b23(n,s) & m<n & m>0) => (~$a13(m,s))":
+m<n:2 states - 0ms
+ (b23(n,s))&m<n):43 states - 1ms
+  m>0:2 states - 0ms
+   ((b23(n,s))&m<n)&m>0):66 states - 1ms
+    ~a13(m,s)):23 states - 0ms
+     (((b23(n,s))&m<n)&m>0)=>~a13(m,s))):1 states - 8ms
+      (A n , s , m (((b23(n,s))&m<n)&m>0)=>~a13(m,s)))):1 states - 0ms
+Total computation time: 10ms.
+____
+TRUE
+eval r3_mex_b1 "?msd_4 An,s,t ($b13(n,s) & t>0 & t<s) => (Em m>0 & m<n & ($b13(m,t)|$b23(m,t)|$a13(m,t)))":
+t>0:2 states - 0ms
+ (b13(n,s))&t>0):48 states - 1ms
+  t<s:2 states - 0ms
+   ((b13(n,s))&t>0)&t<s):72 states - 3ms
+    m>0:2 states - 0ms
+     m<n:2 states - 0ms
+      (m>0&m<n):4 states - 0ms
+       (b13(m,t))|b23(m,t))):30 states - 1ms
+        ((b13(m,t))|b23(m,t)))|a13(m,t))):51 states - 1ms
+         ((m>0&m<n)&((b13(m,t))|b23(m,t)))|a13(m,t)))):96 states - 3ms
+          (E m ((m>0&m<n)&((b13(m,t))|b23(m,t)))|a13(m,t))))):77 states - 1ms
+           (((b13(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b13(m,t))|b23(m,t)))|a13(m,t)))))):1 states - 11ms
+            (A n , s , t (((b13(n,s))&t>0)&t<s)=>(E m ((m>0&m<n)&((b13(m,t))|b23(m,t)))|a13(m,t))))))):1 states - 0ms
+Total computation time: 24ms.
+____
+TRUE
+eval r3_mex_b2 "?msd_4 An,u,s,t ($b13(n,u) & $b23(n,s) & u<t & t<s) => (Em m>0 & m<n & $a13(m,t))":
+(b13(n,u))&b23(n,s))):35 states - 0ms
+ u<t:2 states - 0ms
+  ((b13(n,u))&b23(n,s)))&u<t):63 states - 1ms
+   t<s:2 states - 0ms
+    (((b13(n,u))&b23(n,s)))&u<t)&t<s):29 states - 1ms
+     m>0:2 states - 0ms
+      m<n:2 states - 0ms
+       (m>0&m<n):4 states - 0ms
+        ((m>0&m<n)&a13(m,t))):42 states - 1ms
+         (E m ((m>0&m<n)&a13(m,t)))):42 states - 1ms
+          ((((b13(n,u))&b23(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a13(m,t))))):1 states - 20ms
+           (A n , u , s , t ((((b13(n,u))&b23(n,s)))&u<t)&t<s)=>(E m ((m>0&m<n)&a13(m,t)))))):1 states - 0ms
+Total computation time: 25ms.
+____
+TRUE
+eval r3_sum "?msd_4 An,s,t ($b13(n,s) & $b23(n,t)) => $a13(n,s+3*t)":
+(b13(n,s))&b23(n,t))):35 states - 1ms
+ ((b13(n,s))&b23(n,t)))=>a13(n,(s+(3*t))))):1 states - 8ms
+  (A n , s , t ((b13(n,s))&b23(n,t)))=>a13(n,(s+(3*t)))))):1 states - 0ms
+Total computation time: 12ms.
+____
+TRUE
+
+[Walnut]$         0.36 real         1.12 user         0.05 sys
+           273383424  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               18273  page reclaims
+                   7  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  61  voluntary context switches
+                4158  involuntary context switches
+         12465533679  instructions retired
+          4325907463  cycles elapsed
+           250250248  peak memory footprint
