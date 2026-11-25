@@ -23,4 +23,4 @@ This repository answers the questions of Fokkink and Joshi ("Anti-recurrence seq
 - Walnut certificates: copy `automata/RUSTY*.txt` into Walnut's `Word Automata Library/` and `walnut/rusty*.txt` into `Command Files/`, then run `load rusty4.txt;`. d = 15 uses the equivalent split statements `rusty15b.txt` and `rusty15c.txt` (Walnut's alphabet limit). See `RESULT-d15.md`.
 
 ## Disclosure
-The work was developed with AI assistance (Anthropic's Claude and the research assistant Astra). The author checked the results and is responsible for the content.
+The work was developed with AI assistance (Anthropic's Claude and OpenAI's Codex). The author checked the results and is responsible for the content.
