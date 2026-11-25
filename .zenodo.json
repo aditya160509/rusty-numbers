@@ -1,5 +1,5 @@
-{"title":"Anti-recurrence sequences are linear plus automatic: an independent proof, with Walnut certificates for the rusty numbers d <= 15",
- "creators":[{"name":"Balaji, Aditya"}],
- "description":"A proof that for every positive linear form with k >= 2 the anti-recurrence sequence satisfies A_n - kappa n bounded and tau-automatic (Fokkink-Joshi / Clergyman's conjecture), including the rusty numbers for all d, with Walnut certificates for d <= 15. Found independently of an earlier unrefereed manuscript by L. Cundric (11 Oct 2026). Preprint, not refereed. Developed with AI assistance.",
+{"title":"Exact discrepancy and state complexity of linear anti-recurrence sequences",
+ "creators":[{"name":"Balaji, Aditya","affiliation":"Independent researcher"}],
+ "description":"For every positive linear form, the exact range of A_n - kappa n (sharp, every value attained; proves Cundric's narrowest-box conjecture) and the exact minimal automaton and state count. Rusty numbers: 10m-4, 10m-1, 10m+1 states for d = 3m, 3m+1, 3m+2, agreeing with Walnut certificates for d <= 15. Also zero coefficients. Answers questions of Fokkink and Joshi (Integers 26 (2026) A24). Preprint, not refereed. Developed with AI assistance (Anthropic's Claude and OpenAI's Codex).",
  "upload_type":"publication","publication_type":"preprint","license":"cc-by-4.0",
- "keywords":["anti-recurrence sequences","automatic sequences","Walnut","rusty numbers","combinatorics on words"]}
+ "keywords":["anti-recurrence sequences","automatic sequences","state complexity","Walnut","rusty numbers"]}
