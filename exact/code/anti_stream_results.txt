@@ -1,0 +1,9 @@
+(1, 4) PASS k=2 q=5 states=9 N=10000000 observed=[-6,1] allocated_bytes=53750013
+(1, 9) PASS k=2 q=10 states=26 N=10000000 observed=[-13,4] allocated_bytes=66250014
+(1, 20) PASS k=2 q=21 states=61 N=10000000 observed=[-27,11] allocated_bytes=93750014
+(2, 3) PASS k=2 q=5 states=8 N=10000000 observed=[-7,0] allocated_bytes=53750013
+(1, 1, 1) PASS k=3 q=3 states=3 N=10000000 observed=[-5,-3] allocated_bytes=52500013
+(3, 1, 2) PASS k=3 q=6 states=7 N=10000000 observed=[-11,-5] allocated_bytes=63750013
+(0, 2) PASS k=2 q=2 states=3 N=10000000 observed=[-2,0] allocated_bytes=46250013
+(3, 0) PASS k=2 q=3 states=4 N=10000000 observed=[-5,-2] allocated_bytes=48750013
+(0, 0, 0, 2) PASS k=4 q=2 states=3 N=10000000 observed=[-2,0] allocated_bytes=51250013

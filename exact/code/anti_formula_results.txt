@@ -1,0 +1,52 @@
+rusty 1 -2 -1 2
+rusty 2 -3 -1 3
+rusty 3 -5 0 6
+rusty 4 -6 1 9
+rusty 5 -7 1 11
+rusty 6 -9 2 16
+rusty 7 -10 3 19
+rusty 8 -11 3 21
+rusty 9 -13 4 26
+rusty 10 -14 5 29
+rusty 11 -15 5 31
+rusty 12 -17 6 36
+rusty 13 -18 7 39
+rusty 14 -19 7 41
+rusty 15 -21 8 46
+rusty 16 -22 9 49
+rusty 17 -23 9 51
+rusty 18 -25 10 56
+rusty 19 -26 11 59
+rusty 20 -27 11 61
+rusty 21 -29 12 66
+rusty 22 -30 13 69
+rusty 23 -31 13 71
+rusty 24 -33 14 76
+rusty 25 -34 15 79
+rusty 26 -35 15 81
+rusty 27 -37 16 86
+rusty 28 -38 17 89
+rusty 29 -39 17 91
+rusty 30 -41 18 96
+rusty 31 -42 19 99
+rusty 32 -43 19 101
+rusty 33 -45 20 106
+rusty 34 -46 21 109
+rusty 35 -47 21 111
+rusty 36 -49 22 116
+rusty 37 -50 23 119
+rusty 38 -51 23 121
+rusty 39 -53 24 126
+rusty 40 -54 25 129
+large rusty 50 -67 31 161
+large rusty 60 -81 38 196
+large rusty 100 -134 65 329
+large rusty 150 -201 98 496
+large rusty 200 -267 131 661
+large rusty 300 -401 198 996
+large rusty 500 -667 331 1661
+exhaustive 2 25 cumulative 625
+exhaustive 3 8 cumulative 1137
+exhaustive 4 4 cumulative 1393
+exhaustive 5 3 cumulative 1636
+random 100 passed

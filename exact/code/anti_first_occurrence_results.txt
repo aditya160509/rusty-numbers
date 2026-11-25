@@ -1,0 +1,15 @@
+d 1 first min index 1 first max index 2
+d 2 first min index 2 first max index 3
+d 3 first min index 44 first max index 11
+d 4 first min index 70 first max index 348
+d 5 first min index 102 first max index 28
+d 6 first min index 6840 first max index 977
+d 9 first min index 67052 first max index 6705
+d 15 first min index 954996 first max index 59687
+d 16 first min index 894595 first max index 15208105
+d 20 first min index 2093642 first max index 172062
+d 40 first min index 51676085624 first max index 2118719510558
+d 100 first min index 96127605962104 first max index 9708888202172438
+d 300 first min index 359590568931483167938723771 first max index 1194653052928515508102072
+d 500 first min index 1629714267675019702788828 first max index 307922060783112360941905825
+d=10^9 range (-1333333334, 666666665) states 3333333329 A(10^40) 20000000029999999999999999999999999999999999989999 B(10^40) 10000000004999999995000000004999999995000

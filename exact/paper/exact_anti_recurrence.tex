@@ -1,0 +1,236 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,hyperref}
+\newtheorem{theorem}{Theorem}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\fl}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\ind}[1]{[\,#1\,]}
+\title{Exact discrepancy and state complexity\\ of linear anti-recurrence sequences}
+\author{Aditya Balaji\\ \small Independent researcher}
+\date{25 November 2026 \quad (preprint, not refereed)}
+\begin{document}\maketitle
+\begin{abstract}
+For a positive integral linear form \(\mathbf a=(a_1,\dots,a_k)\), \(k\ge2\), Fokkink and Joshi defined the anti-recurrence sequence \(A_n\) and conjectured that \(e_n=A_n-\kappa n\) is \(\tau\)-automatic, where \(\tau=\sum a_i\) and \(\kappa=k\tau+1\). That conjecture has since been claimed in full by others. We go further and determine the discrepancy and its automaton exactly. With \(T=\kappa-A_1\), we give closed formulas for \(C\) and \(H\), depending only on \(k\), \(\tau\) and \(T\), such that \(\{e_n:n\ge1\}=\{-C,\dots,H\}\): the bound is sharp and every intermediate value occurs. This proves the ``narrowest box'' conjecture of Cundric. We list the states of the minimal most-significant-digit-first automaton explicitly and prove that its size is
+\(C+H+1+H_++\sum_{t=1}^{k-1}\bigl(\fl{(C-t)/k}-T-a_1-\dots-a_{k-t}+1\bigr)_+\).
+For the rusty numbers \((1,d)\) this gives \(10m-4\), \(10m-1\), \(10m+1\) states for \(d=3m,3m+1,3m+2\), which agrees with independent Walnut certificates for \(d\le15\). We also characterise exactly which forms with zero coefficients define an anti-recurrence sequence, and prove that those are linear plus automatic too.
+\end{abstract}
+
+\section{Introduction and prior work}
+Fokkink and Joshi \cite{fj} introduced anti-recurrence sequences. They proved that \(A_n-\kappa n\) is automatic when \(A_1\) is small, conjectured this for every positive form, and singled out the rusty numbers \((1,d)\) as the first open case (for \(d=4\) the obvious pattern \(A_{5p+1}=55p+9\) first fails at \(p=348\)).
+
+The automaticity conjecture has since been claimed in full by two independent groups. Cundric \cite{cundric} (an unrefereed AI-generated manuscript) proves it via a bound \(-k\tau\le e_n\le\tau-k\) and a two-term recursion of the form \eqref{eq:local} below. He conjectures that the narrowest box allowed by his criterion is the exact range of \(e_n\). The TrueTuring project \cite{tt} reports a Lean formalisation of the automaticity theorem, and explicitly leaves minimal state counts and optimal bounds open. Our earlier note \cite{ab} gives a further independent proof and Walnut certificates for the rusty numbers \(d\le15\).
+
+This paper settles the exact questions. Theorem~\ref{range} gives the exact range of \(e_n\) and shows that no value is skipped. Theorem~\ref{states} gives the minimal automaton and its exact size for every positive form. Section~\ref{sec:zero} treats zero coefficients. The two-term recursion (Proposition~\ref{prop:local}) is not new, and we credit it to \cite{cundric}; we include its short proof because everything else rests on it.
+
+\section{Setting and the inverse-rank identity}
+Let \(k\ge2\) and \(a_1,\dots,a_k\ge1\). Put
+\[
+q=\tau=\sum_i a_i,\quad L=kq,\quad K=\kappa=L+1,\quad A_1=\sum_i i\,a_i,\quad T=K-A_1=1+\sum_i(k-i)a_i,\quad P_j=a_1+\dots+a_j.
+\]
+The sequences \(A,B\) are built greedily: \(B_{k(n-1)+1}<\dots<B_{kn}\) are the \(k\) smallest positive integers not yet used, and \(A_n=\sum_i a_iB_{k(n-1)+i}\). By \cite{fj}, \(A\) and \(B\) are increasing and complementary, and \(A_{n+1}-A_n\ge L\). Put \(e_n=A_n-Kn\) for \(n\ge1\) and set \(e_0=0\) (only as a boundary convention; it is never counted as a positive-index value). The gap bound gives
+\begin{equation}\label{gap}
+e_{n+1}\ge e_n-1\qquad(n\ge1).
+\end{equation}
+Note that \(e_1=-T\), and that \(k\le T\le(k-1)q\) (the lower bound because \(a_i\ge1\), the upper because \(\sum_i(i-1)a_i\ge a_k(k-1)\ge1\)).
+
+\begin{lemma}[inverse rank]\label{rank}
+For \(m\ge1\) let \(t(m)=\#\{j\ge1:A_j<B_m\}\). Then \(B_m=m+t(m)\) and \(t(m)=\#\{j\ge1:Lj+e_j<m\}\).
+\end{lemma}
+\begin{proof}
+Below \(B_m\) there are \(m-1\) terms of \(B\) and \(t(m)\) terms of \(A\), so \(B_m=m+t(m)\). Below \(A_j\) there are \(A_j-j\) terms of \(B\), so \(A_j<B_m\) iff \(A_j-j<m\), and \(A_j-j=Lj+e_j\).
+\end{proof}
+
+\begin{lemma}[balance identity]\label{balance}
+Write \(n-1=qp+r\) with \(p\ge0\), \(0\le r<q\), and put \(z_i=kr+i\in[1,L]\), \(m_i=Lp+z_i\). Then
+\(e_n=-T-r+\sum_i a_i\bigl(t(m_i)-p\bigr)\).
+\end{lemma}
+\begin{proof}
+\(m_i=k(n-1)+i\) are the indices of the block generating \(A_n\). Substitute \(B_{m_i}=m_i+t(m_i)\), use \(\sum a_i=q\), \(\sum ia_i=A_1\), \(L=kq\), and subtract \(K(qp+r+1)\).
+\end{proof}
+
+For \(0\le r<q\) and integers \(x,y\) define the \emph{local map}
+\begin{equation}\label{F}
+F_r(x,y)=-T-r+\sum_{i=1}^k a_i\bigl(-\ind{kr+i\le x}+\ind{kr+i>L+y}\bigr),
+\end{equation}
+where \(\ind{\cdot}\) is the indicator. Because every \(a_i>0\), \(F_r\) is nonincreasing in each argument, and depends on \(x\) only through \(\max(x,0)\).
+
+\section{The exact range}
+\subsection{The constants}
+Put \(M=T+q-1\), \(D=k^2-1\), \(N=k^2M-kT\), and
+\begin{equation}\label{CH}
+C=\fl{\frac{N-1}{D}}=\fl{\frac{(k^2-k)T+k^2(q-1)-1}{k^2-1}},\qquad H=\fl{\frac Ck}-T.
+\end{equation}
+
+\begin{lemma}\label{arith}
+(a) An integer \(c\) satisfies \(c=M+\fl{(c-kT)/k^2}\) iff \(N-k^2<Dc\le N\); \(C\) is the least such integer.
+(b) \(C=T+q-1+\fl{H/k}\).
+(c) \(k\le T\le C\le L-k\), and \(-L+k\le 1-T\le H\le q-1-T<L\).
+\end{lemma}
+\begin{proof}
+(a) \(c-M=\fl{(c-kT)/k^2}\) means \(c-M\le (c-kT)/k^2<c-M+1\), i.e.\ \(Dc\le N<Dc+k^2\). The least integer with \(Dc>N-k^2\) is \(\fl{(N-k^2)/D}+1=\fl{(N-1)/D}\).
+(b) \(\fl{H/k}=\fl{(\fl{C/k}-T)/k}=\fl{(C-kT)/k^2}\); apply (a).
+(c) \(N-1-DT=k^2(q-1)-(k-1)T-1\ge(2k-1)q-k^2-1\ge k^2-k-1>0\) using \(T\le(k-1)q\), \(q\ge k\); so \(C\ge T\). Also \(DL-(N-1)=kq(k^2-k-1)-k(k-1)T+k^2+1\ge k(k-2)q+k^2+1\ge k^3-k^2+1>D(k-1)\), so \((N-1)/D<L-k+1\) and \(C\le L-k\). Then \(H\ge\fl{T/k}-T\ge1-T\ge1-(k-1)q\ge -L+k\), and \(H\le\fl{(L-k)/k}-T=q-1-T\).
+\end{proof}
+
+\subsection{Envelopes of the local map}
+\begin{lemma}\label{env}
+Let \(c\) and \(h\) be integers with \(k\le c\le L-k\) and \(-L+k\le h\le q-1-T\). Then
+\[
+\max_{0\le r<q}F_r(-c,-c)=-T+\fl{c/k},\qquad \min_{0\le r<q}F_r(h,h)=-T-q+1-\fl{h/k}.
+\]
+\end{lemma}
+\begin{proof}
+\emph{Maximum.} With \(x=y=-c<0\) no minus indicator is active. Write \(c=ks+t\), \(0\le t<k\), so \(1\le s\le q-1\). The plus indicator \(kr+i>L-c=k(q-s)-t\) is: off for all \(i\) when \(r<q-s-1\); on exactly for \(i>k-t\) when \(r=q-s-1\); on for all \(i\) when \(r\ge q-s\). So \(F_r=-T-r\) (\(\le -T\)) for \(r<q-s-1\); \(F_{q-s-1}=-T+s+1-P_{k-t}\le -T+s\); and \(F_r=-T-r+q\) for \(r\ge q-s\), largest at \(r=q-s\) with value \(-T+s\).
+
+\emph{Minimum, \(h\ge0\).} No plus indicator is active, since \(kr+i\le L\le L+h\). Write \(h=ks+t\) with \(0\le t<k\); since \(h<q-1\) we have \(s<q-1\). Then \(F_r=-T-r-q\) for \(r<s\), \(F_s=-T-s-P_t\), and \(F_r=-T-r\) for \(r>s\). As \(P_t\le q-1\), the minimum is \(-T-q+1-s\): it is reached at \(r=s-1\) when \(s\ge1\), and at \(r=q-1\) when \(s=0\).
+
+\emph{Minimum, \(h<0\).} No minus indicator is active. Let \(r_0=\fl{(L+h)/k}=q+\fl{h/k}\in[1,q-1]\). For \(r<r_0\) we have \(kr+k\le L+h\), so \(F_r=-T-r\), with minimum \(-T-r_0+1\). At \(r=r_0\) the index \(i=k\) is active (\(kr_0+k>L+h\)), so \(F_{r_0}\ge -T-r_0+a_k\ge -T-r_0+1\). For \(r>r_0\) all plus indicators are active and \(F_r=-T-r+q\ge1-T>-T-r_0+1\). The minimum is \(-T-r_0+1=-T-q+1-\fl{h/k}\).
+\end{proof}
+
+\subsection{The bound}
+\begin{proposition}\label{box}
+\(-C\le e_n\le H\) for every \(n\ge1\).
+\end{proposition}
+\begin{proof}
+Strong induction on \(n\). Assume the bound for all positive indices below \(n\), and use the notation of Lemma~\ref{balance}. Since \(B_{m_i}<A_n\), only indices \(j<n\) are counted in \(t(m_i)\). Every counted \(j\) satisfies \(Lj-C\le Lj+e_j<m_i\), so
+\(t(m_i)\le p+\fl{(z_i-1+C)/L}\).
+Conversely, every \(j\ge1\) with \(Lj+H<m_i\) satisfies \(j\le p+\fl{(z_i-1-H)/L}\le p+1\) (as \(z_i-1-H<2L\)). Such \(j\) is \(<n\): if \(p\ge1\) then \(p+1<qp+1\le n\). If \(p=0\) and \(r\ge1\) then \(1<n\). If \(p=r=0\) then \(z_i-1-H\le k-1+L-k<L\), so no \(j\) qualifies. Hence \(t(m_i)\ge p+\fl{(z_i-1-H)/L}\). For \(-L\le y<L\) and \(1\le z\le L\) we have \(\fl{(z-1-y)/L}=-\ind{z\le y}+\ind{z>L+y}\), so Lemma~\ref{balance} gives
+\(F_r(H,H)\le e_n\le F_r(-C,-C)\).
+By Lemmas~\ref{arith}(b),(c) and \ref{env}, the right side is at most \(-T+\fl{C/k}=H\) and the left side at least \(-T-q+1-\fl{H/k}=-C\).
+\end{proof}
+
+\subsection{The local rule}
+\begin{proposition}[two-term rule; cf.\ \cite{cundric}]\label{prop:local}
+For all \(p\ge0\) and \(0\le r<q\),
+\begin{equation}\label{eq:local}
+e_{qp+r+1}=F_r(e_p,e_{p+1}).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Let \(m=Lp+z\) with \(1\le z\le L\). For \(1\le j\le p-1\), \(Lj+e_j\le L(p-1)+H<Lp<m\), since \(H<L\). For \(j\ge p+2\), \(Lj+e_j\ge Lp+2L-C\ge Lp+L+k>m\). So, by Lemma~\ref{rank},
+\(t(m)=(p-1)+\ind{z>e_p}+\ind{z>L+e_{p+1}}=p-\ind{z\le e_p}+\ind{z>L+e_{p+1}}\).
+This also holds for \(p=0\), because then the index \(0\) is not counted and \(\ind{z\le e_0}=0\). Substitute into Lemma~\ref{balance}.
+\end{proof}
+
+\subsection{Sharpness and the full range}
+\begin{theorem}\label{range}
+\(\{e_n:n\ge1\}=\{-C,-C+1,\dots,H\}\).
+\end{theorem}
+\begin{proof}
+\emph{Endpoints.} Let \(c=-\min_{n\ge1}e_n\) and \(h=\max_{n\ge1}e_n\), which exist by Proposition~\ref{box}. Since \(e_1=-T\), we have \(T\le c\le C\) and \(-T\le h\le H\), so \(c\) and \(h\) satisfy the hypotheses of Lemma~\ref{env}.
+Choose \(p\ge0\) with \(e_{p+1}=-c\). If \(p\ge1\), \eqref{gap} gives \(e_p\le1-c\le0\); if \(p=0\), \(e_p=0\). In both cases \(F_r(e_p,e_{p+1})=F_r(-c,-c)\), because \(F_r\) depends on its first argument only through its positive part. So \(h\ge\max_rF_r(-c,-c)\). Conversely, every value is \(e_{qp+r+1}=F_r(e_p,e_{p+1})\le F_r(-c,-c)\) by monotonicity (also for \(p=0\), as \(e_0=0\ge-c\)). Hence \(h=\max_rF_r(-c,-c)=-T+\fl{c/k}\) by Lemma~\ref{env}.
+Next, if \(h\ge1\), choose \(p\ge1\) with \(e_p=h\). Then \(e_{p+1}\ge h-1\ge0\) by \eqref{gap}, so no plus indicator is active for \(e_{p+1}\) or for \(h\), and \(F_r(e_p,e_{p+1})=F_r(h,h)\). If \(h\le0\), choose \(p\ge0\) with \(e_{p+1}=h\). Then \(\max(e_p,0)=0=\max(h,0)\), and again \(F_r(e_p,e_{p+1})=F_r(h,h)\). Either way \(-c\le\min_rF_r(h,h)\). Conversely \(e_{qp+r+1}=F_r(e_p,e_{p+1})\ge F_r(h,h)\), since \(\max(e_p,0)\le\max(h,0)\) and \(e_{p+1}\le h\). Hence \(-c=\min_rF_r(h,h)=-T-q+1-\fl{h/k}\).
+Combining the two equations, \(c=M+\fl{(c-kT)/k^2}\). By Lemma~\ref{arith}(a), \(c\ge C\). Hence \(c=C\) and \(h=H\).
+
+\emph{No gaps.} This part uses the automaton of Section~\ref{sec:dfao}. By \eqref{reset} below, the digit pair \(00\) resets it to the initial state. So if a word \(w\) reaches some state, then for any base-\(q\) word \(v\) with a nonzero leading digit, \(v00w\) reaches the same state. Thus every value of \(e\) occurs at arbitrarily large indices. Take an occurrence of \(H\) and a later occurrence of \(-C\). By \eqref{gap} the sequence descends by at most \(1\) per step between them, so it takes every value in between.
+\end{proof}
+
+\begin{corollary}
+The exact range depends only on \(k\), \(q\) and \(T\). In particular \(e_n\ge -kq+k\) always (cf.\ the bound \(-kq\) of \cite{cundric}), and \(e_n\le0\) for all \(n\) iff \(C<k(T+1)\).
+\end{corollary}
+
+\section{The minimal automaton}\label{sec:dfao}
+Read \(p\ge0\) in base \(q\), most significant digit first, and output \(e_{p+1}\). (This is the shifted convention of \cite{fj}; Walnut's \texttt{RUSTY} automata use it too.) Define the state \(W(p)=(\max(e_p,0),\,e_{p+1})\), with initial state \(W(0)=(0,-T)\), output equal to the second coordinate, and digit transitions
+\begin{equation}\label{delta}
+\delta_0(x,y)=(0,F_0(x,y)),\qquad \delta_r(x,y)=\bigl(\max(0,F_{r-1}(x,y)),\,F_r(x,y)\bigr)\quad(1\le r<q).
+\end{equation}
+
+\begin{proposition}\label{dfao}
+\(W(qp+r)=\delta_r(W(p))\) for all \(p\ge0\), \(0\le r<q\). Hence \eqref{delta} is a finite \(q\)-automaton computing \(p\mapsto e_{p+1}\), with states in \([0,\max(H,0)]\times[-C,H]\).
+\end{proposition}
+\begin{proof}
+For \(r\ge1\), both coordinates follow from \eqref{eq:local}. For \(r=0\), the second coordinate follows from \eqref{eq:local}. If \(p\ge1\), then \(e_{qp}=F_{q-1}(e_{p-1},e_p)\le -T-(q-1)+q=1-T<0\), so the first coordinate is \(0\); if \(p=0\), it is \(\max(e_0,0)=0\). The leading-zero condition \(\delta_0(0,-T)=(0,-T)\) holds because \(L-T\ge k\).
+\end{proof}
+
+For any reachable state \((x,y)\) we have \(L+y\ge L-C\ge k\). So in \(\delta_0\) no plus indicator fires, and
+\begin{equation}\label{reset}
+\delta_0(x,y)=(0,-T-P_{\min(x,k)}),\qquad \delta_0\delta_0(x,y)=(0,-T).
+\end{equation}
+
+\begin{theorem}\label{states}
+For \(1\le t\le k-1\) let \(\Delta_t=P_{k-t}-1\) and \(H_t=\fl{(C-t)/k}-T\). The reachable states of \eqref{delta} are exactly the disjoint union of
+\[
+Q_0=\{(0,b):-C\le b\le H\},\quad Q_1=\{(j,j-1):1\le j\le H\},\quad Q_{2,t}=\{(j-\Delta_t,j):\Delta_t+1\le j\le H_t\},
+\]
+and no two of them are equivalent. Hence the minimal automaton has exactly
+\[
+S(\mathbf a)=C+H+1+H_++\sum_{t=1}^{k-1}(H_t-\Delta_t)_+
+\]
+states, where \(x_+=\max(x,0)\).
+\end{theorem}
+\begin{proof}
+\emph{Only these states.} A state with first coordinate \(0\) lies in \(Q_0\) by Theorem~\ref{range}. A state \((x,y)\) with \(x>0\) equals \(\delta_r(x',b)\) for some reachable parent \((x',b)\) and digit \(r\ge1\), with \(F_{r-1}(x',b)=x>0\). If \(b\ge0\), no plus indicator fires and every \(F\) value is negative; so \(b<0\). Then the parent's first coordinate is \(0\), by \eqref{gap} (or because it is the initial state). By the block analysis in the proof of Lemma~\ref{env} (now with \(-b=ks+t\)), the values \(F_r(0,b)\) are: negative before the plus region; \(-T-(q-s-1)+q-P_{k-t}\) at the partial block \(r=q-s-1\) when \(t\ge1\); and \(-T-r+q\) on the full blocks \(r\ge q-s\), decreasing by one per digit. If \(F_{r-1}>0\) lies in a full block, then \((x,y)=(j,j-1)\) with \(1\le j\le H\), which is in \(Q_1\). If it is the partial block, then \(y=j:=s-T\) and \(x=j-\Delta_t\). Here \(x>0\) forces \(j\ge\Delta_t+1\), and \(ks+t=-b\le C\) forces \(j\le H_t\). This is \(Q_{2,t}\).
+
+\emph{All are reached.} Every \(b\in[-C,H]\) occurs (Theorem~\ref{range}). For \(b<0\), the state carrying it has first coordinate \(0\) by \eqref{gap}, so \((0,b)\) is reachable. For \(0\le j\le H\), take the reachable parent \((0,-k(j+T))\); its value lies in \([-C,0)\) because \(j+T\le\fl{C/k}\). Its plus threshold is a multiple of \(k\), so there is no partial block. Digit \(r=q-(j+T)\in[1,q-1]\) gives \((0,j)\), and when \(j\ge1\) digit \(r+1\) gives \((j,j-1)\). For \(Q_{2,t}\), take the parent \((0,-k(j+T)-t)\), whose value lies in \([-C,0)\) because \(j\le H_t\). Digit \(r=q-(j+T)\) gives \((j-\Delta_t,j)\).
+Disjointness: \(Q_0\) has first coordinate \(0\); \(Q_1\) has \(y=x-1\); \(Q_{2,t}\) has \(y\ge x\). Within \(Q_2\), different \(t\) give different \(\Delta_t\), since all \(a_i>0\).
+
+\emph{Distinguishable.} States with different second coordinates have different outputs. Now take \((x,y)\) and \((x',y)\) with \(0\le x<x'\le\max(H,0)<L\). Let \(z=x'\) and write \(z=kr+i\) with \(1\le i\le k\). In \(F_r(x',y)\) the minus indicator for \(i\) is active, but not in \(F_r(x,y)\). All other indicators move in the same direction, and \(a_i>0\). So \(F_r(x',y)<F_r(x,y)\), and the single digit \(r\) separates the two states.
+
+\emph{Count.} \(|Q_0|=C+H+1\), \(|Q_1|=H_+\), \(|Q_{2,t}|=(H_t-\Delta_t)_+\). Since every state is reachable and any two are distinguishable, the automaton is minimal. By the reset \eqref{reset}, every state is also reached by words with a nonzero leading digit, so the count does not depend on whether leading zeros are allowed.
+\end{proof}
+
+\begin{remark}
+If \(H\le0\) the minimal automaton has exactly \(C+H+1\) states, one per value. This covers the \(A_1\)-bounded forms of \cite{fj}: there \(T\ge q-1\), so \(H\le0\). The size is \(O(kq)\). One transition needs \(O(1)\) operations, using \(F_r(x,y)=-T-r-P_{\mathrm{cl}(x-kr)}+q-P_{\mathrm{cl}(L+y-kr)}\) with \(\mathrm{cl}(v)=\min(k,\max(0,v))\). Moreover, after reading \(p\) we have \(B_{Lp+z}=Lp+z+p-\ind{z\le x}+\ind{z>L+y}\), so both \(A_n\) and \(B_m\) can be computed in \(O(\log n)\) steps without generating earlier terms.
+\end{remark}
+
+\begin{remark}
+A finite automaton for the unshifted map \(n\mapsto e_n\) follows by tracking the pair \((W(n-1),W(n))\), giving at most \(1+S^2\) states. We do not determine the exact unshifted or least-significant-digit-first state counts.
+\end{remark}
+
+\section{The rusty numbers}
+For \(\mathbf a=(1,d)\): \(k=2\), \(q=d+1\), \(T=2\), \(P_1=1\), \(\Delta_1=0\). So \(C=\fl{(4q-1)/3}\), \(H=\fl{C/2}-2\), and \(S=C+H+1+H_++(\fl{(C-1)/2}-2)_+\). For \(d=1,2\) we get \(S=2,3\). For \(d\ge3\):
+\begin{center}
+\begin{tabular}{lccc}\toprule
+\(d\) & \(C\) & \(H\) & minimal states\\\midrule
+\(3m\) & \(4m+1\) & \(2m-2\) & \(10m-4\)\\
+\(3m+1\) & \(4m+2\) & \(2m-1\) & \(10m-1\)\\
+\(3m+2\) & \(4m+3\) & \(2m-1\) & \(10m+1\)\\\bottomrule
+\end{tabular}
+\end{center}
+So \(S(d+3)=S(d)+10\) for \(d\ge3\). The minimal state set is \(\{(0,b):-C\le b\le H\}\cup\{(j,j-1):1\le j\le H\}\cup\{(j,j):1\le j\le\fl{(C-5)/2}\}\).
+
+\paragraph{Agreement with Walnut.} In \cite{ab} the automata \texttt{RUSTYB}--\texttt{RUSTYP} for \(d=1,\dots,15\) were certified in Walnut by the eight-statement method of \cite[Thm.~5]{fj}. Walnut stores them minimised, and their sizes are \(2,3,6,9,11,16,19,21,26,29,31,36,39,41,46\). These are exactly \(S(d)\) for \(d=1,\dots,15\).
+
+\paragraph{The break at 348.} For \(d=4\): \(C=6\), \(H=1\). At digit \(0\), \eqref{eq:local} gives \(e_{5p+1}=-2-\ind{e_p=1}\), so \(A_{5p+1}=55p+9\) fails exactly when \(e_p=1\). The first such \(p\) is \(348\), matching \cite{fj}.
+
+\section{Zero coefficients}\label{sec:zero}
+Now allow \(a_i\ge0\) (the conjecture of \cite{fj} is for \(a_i>0\)). Let \(q=\sum a_i\), \(A_1^*=\sum ia_i\), \(L=kq\), \(K=L+1\). Call the form \emph{admissible} if the greedy construction gives increasing complementary sequences with \(A_n>B_{kn}\) for all \(n\).
+
+\begin{theorem}\label{zero}
+A form with \(a_i\ge0\) is admissible iff \(A_1^*>k\). For every admissible form, \(e_n=A_n-Kn\) is bounded and \(q\)-automatic.
+\end{theorem}
+\begin{proof}
+\emph{Admissibility.} If \(A_1^*\le k\), the first \(B\) block is \(1,\dots,k\), and \(A_1=A_1^*\) either collides with it or is \(0\). Conversely, let \(A_1^*>k\), so \(q\ge2\). Assume inductively that the earlier \(A\) terms are increasing, lie beyond their blocks, and have consecutive gaps \(\ge kq\ge2k\). Then at most one earlier \(A\) term lies strictly between the first and last entries of the current block. Otherwise two consecutive earlier \(A\) terms would enclose at least \(kq-1\ge2k-1\) integers, all of which would have to be current \(B\) entries; that is impossible for a block of \(k\) entries. So the last entry is at most the first plus \(k\). From the second block on, the first entry is at least \(k+1\), so \(A_n\ge q\cdot B_{k(n-1)+1}>B_{kn}\). Also \(A_n\) exceeds the previous \(A\) term by at least \(kq\), because each block coordinate increases by at least \(k\) and the weights total \(q\).
+
+\emph{Boundedness.} Let \(G=K(L-A_1^*)/L\ge0\) and \(C_0=\lceil(kG+K)/(k-1)\rceil\). Suppose \(|e_j|\le C_0\) for all \(j<n\), and let \(x=B_m\) lie in the block of \(A_n\). Then \(x=m+N(x)\) with \(N(x)=\#\{j:A_j<x\}\), and only indices \(j<n\) are counted, so \(x\le kn+n-1<Kn\). This gives \((x-C_0)/K-1\le N(x)\le(x+C_0)/K\), and hence \(-(C_0+K)/L\le B_m-Km/L\le C_0/L\). Summing with weights \(a_i\) gives \(|e_n+G|\le(C_0+K)/k\), and so \(|e_n|\le G+(C_0+K)/k\le C_0\).
+
+\emph{Automaticity.} Write \(t(m_i)=p+u_i\) in Lemma~\ref{balance} (which does not use positivity). Since \(D_j=Lj+e_j\) is strictly increasing with \(D_0=0\), Lemma~\ref{rank} shows that \(u_i\) is the unique integer with \(Lu_i+e_{p+u_i}<z_i\le L(u_i+1)+e_{p+u_i+1}\), and \(|u_i|\le U:=\lceil C_0/L\rceil\). Set \(R=2(U+1)\) and \(p_*=R+U+2\). For \(p\ge p_*\), let the state be the window \((e_{p+1+h})_{|h|\le R}\); for \(p<p_*\), use one exact state per index. A child entry \(e_{qp+r+h+1}\) with \(|h|\le R\) is given by the local rule at parent \(p+s\), where \(|s|\le\lceil R/q\rceil\le U+1\). That rule needs \(e_{p+1+h'}\) only for \(h'\in\{s+u_i-1,s+u_i\}\subseteq[-2U-2,2U+1]\subseteq[-R,R]\), and all these indices are positive since \(p\ge p_*\). So window states have well-defined transitions to window states. This finite automaton has at most \(p_*+(2C_0+1)^{2R+1}\) states and outputs \(e_{p+1}\).
+\end{proof}
+
+\begin{remark}
+Exact ranges and minimal state counts for zero coefficients remain open. The minimality proof above needs \(a_i>0\): with zeros, some thresholds no longer separate states.
+\end{remark}
+
+\section{Computational checks}
+None of these checks are used in the proofs; they test the statements. All scripts are in the repository.
+\begin{itemize}
+\item Automaton \eqref{delta} against brute-force greedy generation: 170 forms (rusty \(d\le30\), all vectors in \(\{1,..,4\}^2\cup\{1,..,4\}^3\), 60 random vectors with \(k\le5\)), \(20{,}000\) terms each, 0 mismatches.
+\item The range \(\{-C,\dots,H\}\) and the count \(S(\mathbf a)\) against the reachable set and an independent Moore minimisation: 1{,}134 forms (rusty \(d<60\), all of \(\{1,..,5\}^k\) for \(k=2,3,4\), 300 random vectors with \(k\le6\), entries \(\le9\)), 0 mismatches.
+\item Walnut-minimised automata for \(d\le15\) (above): sizes equal \(S(d)\).
+\item Admissibility rule of Theorem~\ref{zero}: all 436 zero-containing vectors in \(\{0,..,4\}^k\), \(k=2,3,4\), 3{,}000 terms each, 0 mismatches.
+\item A separate C implementation: nine forms, \(10^7\) terms each, 0 mismatches.
+\end{itemize}
+
+\section*{Disclosure}
+The arguments and computations were developed with AI assistance (Anthropic's Claude and OpenAI's Codex). The author checked every step and is responsible for the content. The results have not been refereed or formally verified.
+
+\begin{thebibliography}{9}
+\bibitem{fj} R. Fokkink and G. Joshi, Anti-recurrence sequences, \emph{Integers} \textbf{26} (2026), A24; arXiv:2506.13337.
+\bibitem{cundric} L. Cundric (AI-generated), Linear anti-recurrence sequences are linear plus automatic, manuscript, October 2026, \url{https://github.com/LarsenCundric/ai-research-experiments}.
+\bibitem{tt} TrueTuring / the Omega Institute, The whole positive coefficient anti-recurrence conjecture (Lean formalisation), \url{https://www.trureturing.org/research/fokkink-joshi-whole-antirecurrence-automaticity/}.
+\bibitem{ab} A. Balaji, Every anti-recurrence sequence is linear plus automatic: an independent proof, with Walnut certificates for the rusty numbers \(d\le15\), preprint, 2026, \url{https://github.com/aditya160509/rusty-numbers}.
+\bibitem{as} J.-P. Allouche and J. Shallit, \emph{Automatic Sequences}, Cambridge Univ. Press, 2003.
+\bibitem{bosma} W. Bosma, R. Bruin, R. Fokkink, J. Grube, A. Reuijl, T. Tromp, Using Walnut to solve problems from the OEIS, \emph{J. Integer Seq.} \textbf{28} (2025), Article 25.3.8.
+\end{thebibliography}
+\end{document}

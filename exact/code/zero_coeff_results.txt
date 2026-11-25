@@ -1,0 +1,13 @@
+k 2 max coefficient 6 admissible nonnegative zero-containing forms tested 9
+k 3 max coefficient 4 admissible nonnegative zero-containing forms tested 54
+k 4 max coefficient 3 admissible nonnegative zero-containing forms tested 164
+k 5 max coefficient 2 admissible nonnegative zero-containing forms tested 196
+total 423
+(0, 2) (3, 31)
+(3, 0) (4, 37)
+(0, 0, 2) (3, 21)
+(0, 3, 0) (4, 25)
+(4, 0, 0) (5, 26)
+(0, 0, 0, 2) (3, 21)
+(0, 1, 0, 1) (2, 21)
+(0, 0, 0, 0, 2) (3, 21)

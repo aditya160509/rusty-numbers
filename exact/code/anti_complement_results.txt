@@ -1,0 +1,10 @@
+(1, 1) PASS 20000 A and 40000 B terms
+(1, 2) PASS 20000 A and 40000 B terms
+(1, 4) PASS 20000 A and 40000 B terms
+(1, 20) PASS 20000 A and 40000 B terms
+(2, 3) PASS 20000 A and 40000 B terms
+(3, 1, 2) PASS 20000 A and 60000 B terms
+(1, 2, 3, 4) PASS 20000 A and 80000 B terms
+(17, 1) PASS 20000 A and 40000 B terms
+(1, 17) PASS 20000 A and 40000 B terms
+(4, 9, 3, 2) PASS 20000 A and 80000 B terms
