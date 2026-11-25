@@ -1,0 +1,55 @@
+a=[1, 20] k=2 tau=21 kappa=43 c0=-1.024  BOUND e in [-28,12] apriori=True  y in [-3,42] T0=1 T1=2
+  data n<=300000: observed range [-26,11]  within bound: True
+  local rule F_r checked on 200025 terms: mismatches 0
+  DFAO from F: raw states 405 (P0=4, window 4+5+1), minimal 61
+  DFAO vs data (p<300000): mismatches 0
+a=[1, 30] k=2 tau=31 kappa=63 c0=-1.016  BOUND e in [-41,18] apriori=True  y in [-3,62] T0=1 T1=2
+  data n<=300000: observed range [-38,14]  within bound: True
+  local rule F_r checked on 200043 terms: mismatches 0
+  DFAO from F: raw states 625 (P0=4, window 4+5+1), minimal 96
+  DFAO vs data (p<300000): mismatches 0
+a=[1, 50] k=2 tau=51 kappa=103 c0=-1.010  BOUND e in [-68,32] apriori=True  y in [-3,102] T0=1 T1=2
+  data n<=300000: observed range [-63,23]  within bound: True
+  local rule F_r checked on 200073 terms: mismatches 0
+  DFAO from F: raw states 1035 (P0=4, window 4+5+1), minimal 161
+  DFAO vs data (p<300000): mismatches 0
+a=[2, 3] k=2 tau=5 kappa=11 c0=-2.200  BOUND e in [-7,0] apriori=True  y in [-3,10] T0=1 T1=2
+  data n<=300000: observed range [-7,0]  within bound: True
+  local rule F_r checked on 200010 terms: mismatches 0
+  DFAO from F: raw states 100 (P0=4, window 4+5+1), minimal 8
+  DFAO vs data (p<300000): mismatches 0
+a=[3, 1] k=2 tau=4 kappa=9 c0=-3.375  BOUND e in [-7,-1] apriori=True  y in [-3,8] T0=1 T1=2
+  data n<=300000: observed range [-6,-1]  within bound: True
+  local rule F_r checked on 200008 terms: mismatches 0
+  DFAO from F: raw states 73 (P0=4, window 4+5+1), minimal 6
+  DFAO vs data (p<300000): mismatches 0
+a=[1, 1, 1] k=3 tau=3 kappa=10 c0=-3.333  BOUND e in [-6,-2] apriori=True  y in [-4,8] T0=1 T1=2
+  data n<=300000: observed range [-5,-3]  within bound: True
+  local rule F_r checked on 200004 terms: mismatches 0
+  DFAO from F: raw states 37 (P0=4, window 4+6+1), minimal 3
+  DFAO vs data (p<300000): mismatches 0
+a=[3, 1, 2] k=3 tau=6 kappa=19 c0=-7.389  BOUND e in [-12,-4] apriori=True  y in [-3,17] T0=1 T1=2
+  data n<=300000: observed range [-11,-5]  within bound: True
+  local rule F_r checked on 200010 terms: mismatches 0
+  DFAO from F: raw states 85 (P0=4, window 4+5+1), minimal 7
+  DFAO vs data (p<300000): mismatches 0
+a=[1, 1, 1, 1] k=4 tau=4 kappa=17 c0=-6.375  BOUND e in [-9,-5] apriori=True  y in [-4,14] T0=1 T1=2
+  data n<=300000: observed range [-8,-5]  within bound: True
+  local rule F_r checked on 200008 terms: mismatches 0
+  DFAO from F: raw states 48 (P0=4, window 4+5+1), minimal 4
+  DFAO vs data (p<300000): mismatches 0
+a=[2, 5, 1] k=3 tau=8 kappa=25 c0=-9.375  BOUND e in [-16,-5] apriori=True  y in [-3,23] T0=1 T1=2
+  data n<=300000: observed range [-15,-5]  within bound: True
+  local rule F_r checked on 200016 terms: mismatches 0
+  DFAO from F: raw states 122 (P0=4, window 4+5+1), minimal 11
+  DFAO vs data (p<300000): mismatches 0
+a=[5, 1] k=2 tau=6 kappa=13 c0=-5.417  BOUND e in [-11,-1] apriori=True  y in [-3,12] T0=1 T1=2
+  data n<=300000: observed range [-10,-1]  within bound: True
+  local rule F_r checked on 200010 terms: mismatches 0
+  DFAO from F: raw states 119 (P0=4, window 4+5+1), minimal 10
+  DFAO vs data (p<300000): mismatches 0
+a=[1, 2, 3, 4] k=4 tau=10 kappa=41 c0=-10.250  BOUND e in [-19,-6] apriori=True  y in [-4,38] T0=1 T1=2
+  data n<=300000: observed range [-18,-7]  within bound: True
+  local rule F_r checked on 200020 terms: mismatches 0
+  DFAO from F: raw states 124 (P0=4, window 4+5+1), minimal 12
+  DFAO vs data (p<300000): mismatches 0

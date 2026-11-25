@@ -1,0 +1,5 @@
+{"title":"Anti-recurrence sequences are linear plus automatic: an independent proof, with Walnut certificates for the rusty numbers d <= 15",
+ "creators":[{"name":"Balaji, Aditya"}],
+ "description":"A proof that for every positive linear form with k >= 2 the anti-recurrence sequence satisfies A_n - kappa n bounded and tau-automatic (Fokkink-Joshi / Clergyman's conjecture), including the rusty numbers for all d, with Walnut certificates for d <= 15. Found independently of an earlier unrefereed manuscript by L. Cundric (11 Oct 2026). Preprint, not refereed. Developed with AI assistance.",
+ "upload_type":"publication","publication_type":"preprint","license":"cc-by-4.0",
+ "keywords":["anti-recurrence sequences","automatic sequences","Walnut","rusty numbers","combinatorics on words"]}

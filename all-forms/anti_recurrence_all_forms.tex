@@ -1,0 +1,170 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,hyperref}
+\newtheorem{theorem}{Theorem}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{proposition}[theorem]{Proposition}\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\N}{\mathbb{N}}
+\title{Every anti-recurrence sequence is linear plus automatic:\\ an independent proof, with Walnut certificates for the rusty numbers \(d\le15\)}
+\author{Aditya Balaji}
+\date{25 November 2026 \quad (preprint, not refereed)}
+\begin{document}\maketitle
+\begin{abstract}
+Fokkink and Joshi asked whether the anti-recurrence sequence \(A_n\) of every positive linear form \(\mathbf a=(a_1,\dots,a_k)\), \(k\ge2\), satisfies \(A_n-\kappa n\) \(\tau\)-automatic, where \(\tau=\sum a_i\) and \(\kappa=k\tau+1\) (the Clergyman's conjecture), and in particular whether this holds for the rusty numbers \(\mathbf a=(1,d)\). We prove both. First, a counting identity for the complementary sequence gives a self-improving inequality with contraction factor \(1/k\), which bounds \(A_n-\kappa n\) for every such form. Second, the same identity shows that each value \(A_{\tau m+r}-\kappa(\tau m+r)\) is a fixed function of finitely many values \(A_{m+t}-\kappa(m+t)\) with \(|t|\) bounded; a standard window construction then gives a \(\tau\)-automaton. For the rusty numbers with \(d\le15\), the automata produced by this construction coincide with automata we verified independently in Walnut. After completing this work we learned that the same theorem, by a closely related argument, was posted on 11 October 2026 in an unrefereed AI-generated manuscript by L.~Cundric \cite{cundric}; the present proof was found independently and offers a second, self-contained verification.
+\end{abstract}
+
+\section*{Relation to prior work}
+Fokkink and Joshi \cite{fj} proved the conjecture for \(A_1\)-bounded forms and asked whether it holds in general and, in particular, for the rusty numbers \((1,d)\). An unrefereed manuscript by Cundric \cite{cundric} (dated 11 October 2026, generated with the AI system Grok) states the same main theorem, with the sharper bound \(-k\tau\le A_n-\kappa n\le\tau-k\) and a two-term recursion of the same shape as Proposition~\ref{local}. We became aware of it only after our proof was complete. We include our argument because independent confirmation of an unrefereed claim is useful, because our boundedness proof is a short self-contained contraction argument, and because for \(d\le15\) the automata it produces agree exactly with automata certified separately by Walnut using the method of \cite[Thm.~5]{fj}.
+
+\section{Setting}
+Let \(\mathbf a=(a_1,\dots,a_k)\) be a positive integral vector, \(k\ge 2\), all \(a_i\ge1\) (this is the setting of \cite[\S1]{fj}). Put \(\tau=\sum_i a_i\ge2\), \(\kappa=k\tau+1\), \(\sigma=\sum_i i\,a_i\).
+The anti-recurrence sequence \(A=(A_n)_{n\ge1}\) and its complement \(B=(B_M)_{M\ge1}\) are defined for \(n=1,2,\dots\) by: \(B_{k(n-1)+1}<\dots<B_{kn}\) are the \(k\) smallest positive integers not among \(A_1,\dots,A_{n-1},B_1,\dots,B_{k(n-1)}\), and \(A_n=\sum_{i=1}^k a_iB_{k(n-1)+i}\).
+For the rusty numbers \(\mathbf a=(1,d)\): \(k=2\), \(\tau=d+1\), \(\kappa=2d+3\).
+
+Throughout, \(e_n=A_n-\kappa n\) and \(N(x)=\#\{j\ge1: A_j<x\}\).
+
+\begin{lemma}[\cite{fj}, Lemmas 2 and 3]\label{basic}
+\(A_{n+1}-A_n\ge k\tau\); \(A\) and \(B\) are complementary in \(\N_{>0}\); \(B\) is strictly increasing.
+Consequently \(B_M\) is the \(M\)-th positive integer not in \(A\), and
+\begin{equation}\label{count}
+B_M=M+N(B_M)\qquad(M\ge1).
+\end{equation}
+Moreover \(A_n>B_{kn}\), hence \(N(x)\le n-1\) for \(x\le B_{kn}\), and \(B_{kn}\le (k+1)n-1\).
+\end{lemma}
+\begin{proof}
+The first three statements are in \cite{fj}. Since \(B\) increases and is the complement of \(A\), \(B_M\) is the \(M\)-th non-element of \(A\), and the number of positive integers below \(B_M\) that lie in \(A\) is \(N(B_M)\); this is \eqref{count}. As \(k\ge2\) and \(a_1,a_k\ge1\), \(A_n\ge B_{k(n-1)+1}+B_{kn}>B_{kn}\); since \(A\) increases, \(A_j>B_{kn}\) for all \(j\ge n\). Thus \(N(B_{kn})\le n-1\) and \eqref{count} gives \(B_{kn}\le kn+n-1\).
+\end{proof}
+
+\section{Boundedness (the weak conjecture)}
+Write \(c_0=\kappa(\sigma-k\tau)/(k\tau)\). Since \(\tau\le\sigma<k\tau\), we have \(-\kappa(k-1)/k\le c_0<0\).
+
+\begin{proposition}[one induction step]\label{step}
+Let \(L\ge0\) and \(U\ge-L\) be integers with \(U\ge-1-k(\tau-1)\). Let \(n\ge1\) and suppose \(-L\le e_j\le U\) for all \(1\le j<n\). Then for every \(M\le kn\)
+\begin{equation}\label{Ebound}
+-\frac{U+\kappa}{k\tau}\ \le\ B_M-\frac{\kappa M}{\kappa-1}\ \le\ \frac{L-1}{k\tau},
+\end{equation}
+and
+\begin{equation}\label{ebound}
+c_0-\frac{U+\kappa}{k}\ \le\ e_n\ \le\ c_0+\frac{L-1}{k}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Fix \(M\le kn\) and \(x=B_M\le B_{kn}\). By Lemma~\ref{basic} only indices \(j<n\) contribute to \(N(x)\).
+
+Upper bound for \(N\): if \(j<n\) and \(A_j<x\) then \(\kappa j-L\le A_j\le x-1\), so \(\kappa j\le x+L-1\). Hence \(N(x)\le\lfloor (x+L-1)/\kappa\rfloor\le (x+L-1)/\kappa\) (note \(x+L-1\ge0\)).
+
+Lower bound for \(N\): every \(j\ge1\) with \(\kappa j\le x-U-1\) satisfies \(j<n\), because \(x-U-1\le (k+1)n-2-U<\kappa n\) by Lemma~\ref{basic}, \(\kappa-(k+1)=k(\tau-1)\) and the hypothesis on \(U\). For such \(j\), \(A_j\le \kappa j+U\le x-1\). Hence \(N(x)\ge\max(0,\lfloor (x-U-1)/\kappa\rfloor)\ge (x-U-\kappa)/\kappa\), using \(\lfloor y/\kappa\rfloor\ge (y-\kappa+1)/\kappa\) for integers \(y\).
+
+Insert both bounds in \(M=x-N(x)\) from \eqref{count}:
+\(M\le x-(x-U-\kappa)/\kappa\) and \(M\ge x-(x+L-1)/\kappa\). Multiplying by \(\kappa/(\kappa-1)\) and using \(\kappa-1=k\tau\) gives \eqref{Ebound}.
+
+For \eqref{ebound} write \(M_i=k(n-1)+i\le kn\) and \(B_{M_i}=\kappa M_i/(\kappa-1)+E_i\). Then
+\[A_n=\sum_i a_iB_{M_i}=\frac{\kappa}{k\tau}\Bigl(k\tau(n-1)+\sigma\Bigr)+\sum_i a_iE_i=\kappa n+c_0+\sum_ia_iE_i,\]
+and \(\sum_i a_i=\tau\) together with \eqref{Ebound} gives \eqref{ebound}.
+\end{proof}
+
+\begin{theorem}[weak Clergyman's conjecture]\label{bounded}
+Let \(L,U\) be integers as in Proposition~\ref{step} with
+\begin{equation}\label{closed}
+\Bigl\lfloor c_0+\tfrac{L-1}{k}\Bigr\rfloor\le U,\qquad \Bigl\lceil c_0-\tfrac{U+\kappa}{k}\Bigr\rceil\ge -L .
+\end{equation}
+Then \(-L\le A_n-\kappa n\le U\) for all \(n\ge1\). The pair \(L=U=C:=\lceil k\kappa/(k-1)\rceil\) satisfies \eqref{closed}; in particular \(|A_n-\kappa n|\le 2\kappa\) for every positive linear form with \(k\ge2\).
+\end{theorem}
+\begin{proof}
+Strong induction on \(n\), with no separate base case: for \(n=1\) the hypothesis of Proposition~\ref{step} is vacuous. Since \(e_n\) is an integer, \eqref{ebound} and \eqref{closed} give \(-L\le e_n\le U\).
+For \(L=U=C\ge0\): the first inequality holds since \(c_0<0\) and \((C-1)/k<C\). For the second, \(c_0\ge-\kappa(k-1)/k\) gives \(c_0-(C+\kappa)/k\ge -C\) as soon as \(C(k-1)\ge k\kappa\).
+\end{proof}
+
+\begin{remark}
+The point is the factor \(1/k\) in \eqref{ebound}: the error in \(e_n\) is an average of \(\tau\) errors \(E_i\), each a factor \(k\tau\) smaller than the error in the \(e_j\). This is where \(k\ge2\) is used. The smallest integer pair satisfying \eqref{closed} is close to optimal; for the rusty numbers it is compared with the data in Table~\ref{tab}.
+\end{remark}
+
+\section{Locality}
+Fix integers \((L,U)\) satisfying Theorem~\ref{bounded}. Let \(Y_-\), \(Y_+\) be integers with
+\[Y_-\le \frac{\kappa(k(r-1)+i)}{k\tau}-\frac{U+\kappa}{k\tau},\qquad \frac{\kappa(k(r-1)+i)}{k\tau}+\frac{L-1}{k\tau}\le Y_+\]
+for all \(0\le r<\tau\), \(1\le i\le k\). Choose integers \(T_0,T_1\ge1\) with \(U-\kappa T_0<Y_-\) and \(\kappa T_1-L\ge Y_+\).
+
+\begin{proposition}[local rule]\label{local}
+Let \(n=\tau m+r\) with \(0\le r<\tau\) and \(m\ge T_0\). Put \(P=\{\kappa t+e_{m+t}: -T_0<t<T_1\}\) and \(S(y)=\#\{p\in P:p<y\}\). For each \(i\), there is exactly one integer \(y_i\in[Y_-,Y_+]\setminus P\) with
+\[ y_i-S(y_i)=k(r-1)+i-T_0, \]
+and \(e_n=\sum_i a_iy_i-\kappa r\). Hence \(e_{\tau m+r}=F_r\bigl(e_{m+t}\bigr)_{-T_0<t<T_1}\) for a function \(F_r\) that depends only on \(\mathbf a\), \(r\) and the constants above.
+\end{proposition}
+\begin{proof}
+Let \(M_i=k(n-1)+i\) and \(x_i=B_{M_i}\). Since \(\kappa M_i/(\kappa-1)=\kappa m+\kappa(k(r-1)+i)/(k\tau)\), Theorem~\ref{bounded} and \eqref{Ebound} (now valid for all \(M\)) give \(y_i:=x_i-\kappa m\in[Y_-,Y_+]\).
+
+Count \(N(\kappa m+y)\) for \(y\in[Y_-,Y_+]\), writing \(j=m+t\), so that \(A_j<\kappa m+y\iff \kappa t+e_{m+t}<y\). If \(t\le-T_0\) then \(\kappa t+e_{m+t}\le U-\kappa T_0<Y_-\le y\), so all \(j\in[1,m-T_0]\) are counted (there are \(m-T_0\) of them). If \(t\ge T_1\) then \(\kappa t+e_{m+t}\ge \kappa T_1-L\ge Y_+\ge y\), so none is counted. For \(-T_0<t<T_1\) we have \(j\ge m-T_0+1\ge1\). Hence \(N(\kappa m+y)=m-T_0+S(y)\).
+
+Now \eqref{count} for \(x_i\) reads \(\kappa m+y_i-(m-T_0)-S(y_i)=M_i=k\tau m+k(r-1)+i\). As \(\kappa-1=k\tau\), the terms in \(m\) cancel, leaving the stated equation; and \(x_i\notin A\) means \(y_i\notin P\).
+Uniqueness: \(g(y)=y-S(y)\) is non-decreasing, and \(g(y+1)=g(y)+1\) whenever \(y\notin P\). So two non-elements \(y<y'\) of \(P\) satisfy \(g(y')\ge g(y)+1\).
+Finally \(A_n=\sum_ia_i(\kappa m+y_i)=\kappa\tau m+\sum a_iy_i\) and \(\kappa n=\kappa\tau m+\kappa r\).
+\end{proof}
+
+\begin{remark}
+In every case we computed (Section~\ref{num}) one can take \(T_0=1\), \(T_1=2\), so \(e_{\tau m+r}\) is a function of the pair \((e_m,e_{m+1})\) alone. The earlier empirical observation that the required window \(k(d)\) grows with \(d\) came from a different alignment of blocks. It is not needed here, since any finite \(T_0,T_1\) suffice.
+\end{remark}
+
+\section{Automaticity}
+\begin{lemma}[window lemma]\label{window}
+Let \(q\ge2\), let \(s:\N_{>0}\to\Sigma\) take values in a finite set, and let \(T_0,T_1\ge1\), \(m_0\ge1\). Suppose that for all \(m\ge m_0\) and \(0\le r<q\),
+\(s(qm+r)=F_r\bigl(s(m+t)\bigr)_{-T_0<t<T_1}\). Then \(f(p)=s(p+1)\) \((p\ge0)\) is \(q\)-automatic.
+\end{lemma}
+\begin{proof}
+Let \(a=2T_0+2\), \(b=2T_1\), and for \(N>a\) let \(W(N)=(s(N+i))_{-a\le i\le b}\in\Sigma^{a+b+1}\).
+Let \(N\ge1\), \(0\le c<q\), \(N'=q(N-1)+c+1\) (this corresponds to \(p\mapsto qp+c\) for \(p=N-1\)). For \(-a\le i\le b\) write \(N'+i=qm''+r''\).
+From \(N'+i\ge q(N-1)+1-a\) we get \(m''\ge N-1-(a+q-2)/q\), so \(m''-T_0+1\ge N-a\) because \(a(q-1)/q-(q-2)/q\ge a/2-1\ge T_0\).
+From \(N'+i\le qN+b\) we get \(m''\le N+b/2\), so \(m''+T_1-1\le N+b\).
+Thus every \(s(m''+t)\) with \(-T_0<t<T_1\) is a coordinate of \(W(N)\). If moreover \(N\ge N_0:=m_0+a+2\), then \(m''\ge m_0\), and so \(W(N')=G_c(W(N))\) for a fixed map \(G_c\).
+
+Let \(P_0=N_0\). Define a DFAO with states \(\{0,\dots,P_0-1\}\cup\Sigma^{a+b+1}\), initial state \(0\), transitions \(\delta(p,c)=qp+c\) if \(qp+c<P_0\), \(\delta(p,c)=W(qp+c+1)\) otherwise, \(\delta(w,c)=G_c(w)\), and outputs \(f(p)\) on \(p\), the middle coordinate on \(w\). By induction on the length of the msd base-\(q\) representation (leading zeros allowed, since \(\delta(0,0)=0\)), the state reached on input \(p\) is \(p\) if \(p<P_0\) and \(W(p+1)\) otherwise: if \(p=qp'+c\ge P_0\) with \(p'\ge P_0\), the state for \(p'\) is \(W(p'+1)\) with \(p'+1>N_0\), and \(G_c\) maps it to \(W(p+1)\). Hence \(f\) is generated by a DFAO reading msd-first, so it is \(q\)-automatic \cite[Thm.~5.2.3]{as}.
+\end{proof}
+
+\begin{theorem}[Clergyman's conjecture for positive forms]\label{main}
+For every positive linear form \(\mathbf a\) of dimension \(k\ge2\), the sequence \(A_n-\kappa n\) is \(\tau\)-automatic. In particular, for every \(d\ge1\) the rusty numbers satisfy: \(A_n-(2d+3)n\) is \((d+1)\)-automatic.
+\end{theorem}
+\begin{proof}
+By Theorem~\ref{bounded}, \(s(n)=e_n\) takes values in the finite set \([-L,U]\). By Proposition~\ref{local} it satisfies the hypothesis of Lemma~\ref{window} with \(q=\tau\ge2\) and \(m_0=T_0\). The automatic sequence \(p\mapsto e_{p+1}\) differs from \(n\mapsto e_n\) only by the index shift used throughout \cite{fj}.
+\end{proof}
+
+\begin{remark}
+This answers both questions in \cite[\S5]{fj}: the conjecture holds without \(A_1\)-boundedness, and the rusty numbers are sums of linear and automatic sequences. The proof is constructive: Proposition~\ref{local} and Lemma~\ref{window} give an explicit automaton.
+\end{remark}
+
+\section{Numerical checks}\label{num}
+All scripts are included (\texttt{proof.py}, \texttt{gena.c}). For each form, \texttt{proof.py} (i)~computes the smallest integer pair \((L,U)\) satisfying \eqref{closed} and the constants \(Y_\pm,T_0,T_1\); (ii)~checks the bound against directly generated terms; (iii)~checks the local rule \(F_r\) of Proposition~\ref{local}, as implemented, against the generated terms; (iv)~builds the DFAO of Lemma~\ref{window} using only \(F_r\) and a finite exact prefix, minimises it, and checks it against the generated terms; (v)~for rusty \(d\le15\), decides language equivalence (with outputs) with the Walnut-verified automata \texttt{RUSTY*.txt}.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{rrrrrc}\toprule
+\(d\) & \(\kappa\) & proved bound \([-L,U]\) & observed range & minimal states & \(\equiv\) Walnut automaton\\\midrule
+1&5&\([-3,-1]\)&\([-2,-1]\)&2&yes\\
+2&7&\([-4,0]\)&\([-3,-1]\)&3&yes\\
+3&9&\([-5,0]\)&\([-5,0]\)&6&yes\\
+4&11&\([-7,1]\)&\([-6,1]\)&9&yes\\
+5&13&\([-8,2]\)&\([-7,1]\)&11&yes\\
+6&15&\([-9,2]\)&\([-9,2]\)&16&yes\\
+7&17&\([-11,3]\)&\([-10,3]\)&19&yes\\
+8&19&\([-12,4]\)&\([-11,3]\)&21&yes\\
+9&21&\([-13,4]\)&\([-13,4]\)&26&yes\\
+10&23&\([-15,5]\)&\([-14,4]\)&29&yes\\
+11&25&\([-16,6]\)&\([-15,5]\)&31&yes\\
+12&27&\([-17,6]\)&\([-17,6]\)&36&yes\\
+13&29&\([-19,7]\)&\([-18,6]\)&39&yes\\
+14&31&\([-20,8]\)&\([-19,7]\)&41&yes\\
+15&33&\([-21,8]\)&\([-20,8]\)&46&yes\\
+20&43&\([-28,12]\)&\([-26,11]\)&&n/a\\
+30&63&\([-41,18]\)&\([-38,14]\)&&n/a\\
+50&103&\([-68,32]\)&\([-63,23]\)&&n/a\\\bottomrule
+\end{tabular}
+\caption{Rusty numbers. Observed ranges from \(4\times10^5\) terms (\(d=1,4\): \(2\times10^6\); \(d\ge20\): \(3\times10^5\)). In all rows, the local rule and the constructed DFAO had zero mismatches against the generated terms.}\label{tab}
+\end{table}
+The same checks, with zero mismatches, were run for the forms \((2,3)\), \((3,1)\), \((5,1)\), \((1,1,1)\), \((3,1,2)\), \((2,5,1)\), \((1,1,1,1)\), \((1,2,3,4)\) on \(3\times10^5\) terms (logs included). These numerical checks are not part of the proof; they test that the proof's constants and rule were derived and implemented correctly.
+
+\section*{Disclosure}
+The argument and computations were developed with AI assistance (Anthropic's Claude and the research assistant Astra). The author checked the results and is responsible for the content. The proofs have not yet been independently refereed.
+
+\begin{thebibliography}{9}
+\bibitem{fj} R. Fokkink and G. Joshi, Anti-recurrence sequences, \emph{Integers} \textbf{26} (2026), A24; arXiv:2506.13337.
+\bibitem{cundric} L. Cundric (AI-generated with Grok), Linear anti-recurrence sequences are linear plus automatic, manuscript v4, 11 October 2026, \url{https://github.com/LarsenCundric/ai-research-experiments}.
+\bibitem{as} J.-P. Allouche and J. Shallit, \emph{Automatic Sequences}, Cambridge Univ. Press, 2003.
+\bibitem{bosma} W. Bosma, R. Bruin, R. Fokkink, J. Grube, A. Reuijl, T. Tromp, Using Walnut to solve problems from the OEIS, \emph{J. Integer Seq.} \textbf{28} (2025), Article 25.3.8.
+\end{thebibliography}
+\end{document}

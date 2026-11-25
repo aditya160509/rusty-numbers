@@ -1,0 +1,12 @@
+a=[1, 1] k=2 tau=2 kappa=5 c0=-1.250  BOUND e in [-3,-1] apriori=True  y in [-3,3] T0=1 T1=2
+  data n<=2000000: observed range [-2,-1]  within bound: True
+  local rule F_r checked on 200004 terms: mismatches 0
+  DFAO from F: raw states 26 (P0=5, window 5+7+1), minimal 2
+  DFAO vs data (p<2000000): mismatches 0
+  equivalent to RUSTYB.txt (2 states): True
+a=[1, 4] k=2 tau=5 kappa=11 c0=-1.100  BOUND e in [-7,1] apriori=True  y in [-3,10] T0=1 T1=2
+  data n<=2000000: observed range [-6,1]  within bound: True
+  local rule F_r checked on 200010 terms: mismatches 0
+  DFAO from F: raw states 99 (P0=4, window 4+5+1), minimal 9
+  DFAO vs data (p<2000000): mismatches 0
+  equivalent to RUSTYD.txt (9 states): True
