@@ -2,6 +2,8 @@
 
 **Aditya Balaji**, independent researcher, 25 November 2026. Preprint, not refereed.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24528659.svg)](https://doi.org/10.5281/zenodo.24528659)
+
 This repository answers and extends the questions of Fokkink and Joshi ("Anti-recurrence sequences", *Integers* 26 (2026) A24, [arXiv:2506.13337](https://arxiv.org/abs/2506.13337)).
 
 | | Result | Where |
